@@ -26,7 +26,9 @@ public class LoginServlet extends HttpServlet {
         UserVO userVO = dao.checkLogin(userID, userPW);
 
         if (userVO != null) {
-            request.setAttribute("userVO", userVO);
+            HttpSession session = request.getSession();
+            session.setAttribute("user", userVO);
+//            request.setAttribute("userVO", userVO);
             request.getRequestDispatcher("/").forward(request, response);
 
         } else {
