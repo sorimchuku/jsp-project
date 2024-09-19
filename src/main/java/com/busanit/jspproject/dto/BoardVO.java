@@ -3,14 +3,14 @@ package com.busanit.jspproject.dto;
 public class BoardVO {
     private int post_id;
     private String title, date, content;
-    private String running_time, running_distance;
-    private String location;
-    private int member_num;
-    private String img_url;
-    private boolean is_private;
+    private String running_time = null, running_distance = null;
+    private String location = null;
+    private int member_num = 0;
+    private String img_url = null;
+    private boolean is_private = false;
     private String user_id;
     private String board_type;
-    private int read_count;
+    private int read_count = 0;
 
     public int getPost_id() {
         return post_id;

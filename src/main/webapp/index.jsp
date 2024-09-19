@@ -1,3 +1,4 @@
+<%@ page import="com.busanit.jspproject.dto.UserVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -16,46 +17,14 @@
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body class="d-flex flex-column h-100">
+<%@include file="layout/header.jsp"%>
 <main class="flex-shrink-0">
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container px-5">
-            <a class="navbar-brand" href="/">홈</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item h5"><a class="nav-link" href="/blog">개인 기록</a></li>
-                    <li class="nav-item h5"><a class="nav-link" href="/team">모집 게시판</a></li>
-                    <li class="nav-item h5"><a class="nav-link" href="/freeboard">자유게시판</a></li>
-                    <c:if test="${userVO == null}">
-                        <li class="nav-item h5"><a class="nav-link" href="/register">회원가입</a></li>
-                    </c:if>
-                    <c:if test="${userVO != null}">
-                        <li class="nav-item h5"><a class="nav-link" href="/logout">로그아웃</a></li>
-                        <li class="nav-item h5"><a class="nav-link" href="/mypage">마이페이지</a></li>
-                    </c:if>
-
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- Header-->
-    <header class="bg-dark py-5">
-        <div class="container px-5">
-            <div class=" align-items-center justify-content-start">
-                    <div class="text-xl-start">
-                        <h1 class="display-8 fw-bolder text-white mb-2">Running Community</h1>
-                    </div>
-            </div>
-        </div>
-    </header>
-    <!-- Features section-->
     <section class="py-5" id="features">
         <div class="container px-5 my-5">
             <div class="row gx-5">
-                <div class="col-lg-4 mb-5 mb-lg-0 ">
+                <div class="col-xl-4 mb-5 mb-lg-0 ">
                     <div class="border rounded-3 p-5">
-                        <c:if test="${userVO == null}" >
+                        <c:if test="${user == null}" >
                             <form action="/login" method="post">
                                 <h3>로그인</h3>
                                 <div class="row flex-nowrap g-2 align-items-center my-2">
@@ -90,10 +59,10 @@
                                 </p>
                             </form>
                         </c:if>
-                        <c:if test="${userVO != null}">
+                        <c:if test="${user != null}">
                             <p>로그인 성공</p>
-                            <p>아이디 : ${userVO.userID}</p>
-                            <p>닉네임 : ${userVO.nickname}</p>
+                            <p>아이디 : ${user.userID}</p>
+                            <p>닉네임 : ${user.nickname}</p>
                         </c:if>
                     </div>
 
@@ -106,23 +75,8 @@
         </div>
     </section>
 
-
+<%@include file="layout/footer.jsp"%>
 </main>
-<!-- Footer-->
-<footer class="bg-dark py-4 mt-auto">
-    <div class="container px-5">
-        <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-            <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Your Website 2023</div></div>
-            <div class="col-auto">
-                <a class="link-light small" href="#!">Privacy</a>
-                <span class="text-white mx-1">&middot;</span>
-                <a class="link-light small" href="#!">Terms</a>
-                <span class="text-white mx-1">&middot;</span>
-                <a class="link-light small" href="#!">Contact</a>
-            </div>
-        </div>
-    </div>
-</footer>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->

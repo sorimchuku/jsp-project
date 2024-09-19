@@ -28,8 +28,7 @@ public class LoginServlet extends HttpServlet {
         if (userVO != null) {
             HttpSession session = request.getSession();
             session.setAttribute("user", userVO);
-//            request.setAttribute("userVO", userVO);
-            request.getRequestDispatcher("/").forward(request, response);
+            response.sendRedirect("/");
 
         } else {
             request.setAttribute("loginError", true);
