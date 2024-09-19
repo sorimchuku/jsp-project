@@ -76,32 +76,32 @@
                   <div class="col-10 flex flex-wrap">
                     <div class="form-check form-control-lg form-check-inline mb-0 me-4">
                       <input class="form-check-input" type="radio" name="age_select" id="age_10"
-                             value="age_10" />
+                             value="10" />
                       <label class="form-check-label" for="age_10">10대</label>
                     </div>
                     <div class="form-check form-control-lg form-check-inline mb-0 me-4 ">
                       <input class="form-check-input" type="radio" name="age_select" id="age_20"
-                             value="age_20" />
+                             value="20" />
                       <label class="form-check-label" for="age_20">20대</label>
                     </div>
                     <div class="form-check form-control-lg form-check-inline mb-0 me-4 ">
                       <input class="form-check-input" type="radio" name="age_select" id="age_30"
-                             value="age_30" />
+                             value="30" />
                       <label class="form-check-label" for="age_30">30대</label>
                     </div>
                     <div class="form-check form-control-lg form-check-inline mb-0 me-4 ">
                       <input class="form-check-input" type="radio" name="age_select" id="age_40"
-                             value="age_40" />
+                             value="40" />
                       <label class="form-check-label" for="age_40">40대</label>
                     </div>
                     <div class="form-check form-control-lg form-check-inline mb-0 me-4 ">
                       <input class="form-check-input" type="radio" name="age_select" id="age_50"
-                             value="age_50" />
+                             value="50" />
                       <label class="form-check-label" for="age_50">50대</label>
                     </div>
                     <div class="form-check form-control-lg form-check-inline mb-0 me-4 ">
                       <input class="form-check-input" type="radio" name="age_select" id="age_60"
-                             value="age_60" />
+                             value="60" />
                       <label class="form-check-label" for="age_60">60대 이상</label>
                     </div>
                   </div>
@@ -122,7 +122,7 @@
 
                 <div class="d-flex justify-content-end pt-3">
                   <input type="reset" class="btn btn-light btn-lg" value="지우기">
-                  <input type="button" class="btn btn-primary btn-lg ms-2" onclick="return checkRegister()" value="회원가입">
+                  <input type="submit" class="btn btn-primary btn-lg ms-2" onclick="return checkRegister()" value="회원가입">
                 </div>
 
               </form>

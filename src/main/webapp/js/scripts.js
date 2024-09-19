@@ -19,6 +19,12 @@ function checkRegister() {
         return  false;
     }
 
+    if (emailCheckResult.value.trim() === "true") {
+        alert("새로운 이메일을 입력해주세요.");
+        userID.focus();
+        return false;
+    }
+
     if (userPW.value.length <= 0 ) {
         alert("비밀번호를 입력하세요");
         userPW.focus();
