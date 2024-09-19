@@ -1,19 +1,18 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 2024-09-13
-  Time: 오후 3:14
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
   <title>회원가입</title>
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <!-- Bootstrap icons-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
   <!-- Core theme CSS (includes Bootstrap)-->
   <link href="css/styles.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -23,36 +22,38 @@
       <div class="col">
         <div class="card card-registration my-4">
           <div class="row g-0">
-            <div class="">
-              <div class="card-body p-md-5 text-black">
+            <div>
+              <form action="/register" method="post" class="card-body p-md-5 text-black">
                 <h3 class="mb-5 text-uppercase">회원가입</h3>
 
                 <div class="row mb-4">
                   <label for="user_id" class="col-sm-2 col-form-label col-form-label-lg">이메일</label>
                   <div class="col-sm-6">
-                    <input type="email" class="form-control form-control-lg" id="user_id" name="user_id">
+                    <input type="text" class="form-control form-control-lg" id="user_id" name="user_id" >
+                    <span id="email_check_result" ></span>
+                    <input type="hidden" name="email_check_result">
                   </div>
-                  <input type="button" class="col-auto btn btn-secondary" id="check_id" value="중복체크">
+                  <input type="button" class="col-auto btn btn-secondary h-25" id="check_id" value="중복체크" onclick="checkEmail()">
                 </div>
 
                 <div class="row mb-4">
                   <label for="user_pw" class="col-sm-2 col-form-label col-form-label-lg text-nowrap">비밀번호</label>
                   <div class="col-sm-6">
-                    <input type="email" class="form-control form-control-lg" id="user_pw" name="user_pw">
+                    <input type="password" class="form-control form-control-lg" id="user_pw" name="user_pw">
                   </div>
                 </div>
 
                 <div class="row mb-4">
                   <label for="user_pw_check" class="col-sm-2 col-form-label col-form-label-lg">비밀번호 확인</label>
                   <div class="col-sm-6">
-                    <input type="email" class="form-control form-control-lg" id="user_pw_check" name="user_pw_check">
+                    <input type="password" class="form-control form-control-lg" id="user_pw_check" name="user_pw_check">
                   </div>
                 </div>
 
                 <div class="row mb-4">
                   <label for="user_nickname" class="col-sm-2 col-form-label col-form-label-lg">닉네임</label>
                   <div class="col-sm-6">
-                    <input type="email" class="form-control form-control-lg" id="user_nickname" name="user_nickname">
+                    <input type="text" class="form-control form-control-lg" id="user_nickname" name="user_nickname">
                   </div>
                 </div>
 
@@ -75,32 +76,32 @@
                   <div class="col-10 flex flex-wrap">
                     <div class="form-check form-control-lg form-check-inline mb-0 me-4">
                       <input class="form-check-input" type="radio" name="age_select" id="age_10"
-                             value="age_10" />
+                             value="10" />
                       <label class="form-check-label" for="age_10">10대</label>
                     </div>
                     <div class="form-check form-control-lg form-check-inline mb-0 me-4 ">
                       <input class="form-check-input" type="radio" name="age_select" id="age_20"
-                             value="age_20" />
+                             value="20" />
                       <label class="form-check-label" for="age_20">20대</label>
                     </div>
                     <div class="form-check form-control-lg form-check-inline mb-0 me-4 ">
                       <input class="form-check-input" type="radio" name="age_select" id="age_30"
-                             value="age_30" />
+                             value="30" />
                       <label class="form-check-label" for="age_30">30대</label>
                     </div>
                     <div class="form-check form-control-lg form-check-inline mb-0 me-4 ">
                       <input class="form-check-input" type="radio" name="age_select" id="age_40"
-                             value="age_40" />
+                             value="40" />
                       <label class="form-check-label" for="age_40">40대</label>
                     </div>
                     <div class="form-check form-control-lg form-check-inline mb-0 me-4 ">
                       <input class="form-check-input" type="radio" name="age_select" id="age_50"
-                             value="age_50" />
+                             value="50" />
                       <label class="form-check-label" for="age_50">50대</label>
                     </div>
                     <div class="form-check form-control-lg form-check-inline mb-0 me-4 ">
                       <input class="form-check-input" type="radio" name="age_select" id="age_60"
-                             value="age_60" />
+                             value="60" />
                       <label class="form-check-label" for="age_60">60대 이상</label>
                     </div>
                   </div>
@@ -111,7 +112,7 @@
                   <div class="col-10 ">
                     <label class="visually-hidden" for="location_select">지역</label>
                     <select class="form-select form-select-lg" id="location_select">
-                      <option selected >선택하세요</option>
+                      <option selected value="" >선택하세요</option>
                       <option value="1">One</option>
                       <option value="2">Two</option>
                       <option value="3">Three</option>
@@ -120,11 +121,11 @@
                 </div>
 
                 <div class="d-flex justify-content-end pt-3">
-                  <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-light btn-lg">Reset all</button>
-                  <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning btn-lg ms-2">Submit form</button>
+                  <input type="reset" class="btn btn-light btn-lg" value="지우기">
+                  <input type="submit" class="btn btn-primary btn-lg ms-2" onclick="return checkRegister()" value="회원가입">
                 </div>
 
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -132,5 +133,10 @@
     </div>
   </div>
 </section>
+
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
 </body>
 </html>
