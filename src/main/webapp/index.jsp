@@ -1,3 +1,4 @@
+<%@ page import="com.busanit.jspproject.dto.UserVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -27,11 +28,11 @@
                     <li class="nav-item h5"><a class="nav-link" href="/blog">개인 기록</a></li>
                     <li class="nav-item h5"><a class="nav-link" href="/team">모집 게시판</a></li>
                     <li class="nav-item h5"><a class="nav-link" href="/freeboard">자유게시판</a></li>
-                    <c:if test="${userVO == null}">
+                    <c:if test="${sessionScope.user == null}">
                         <li class="nav-item h5"><a class="nav-link" href="/register">회원가입</a></li>
                     </c:if>
-                    <c:if test="${userVO != null}">
-                        <li class="nav-item h5"><a class="nav-link" href="/logout">로그아웃</a></li>
+                    <c:if test="${user != null}">
+                        <li class="nav-item h5"><a class="nav-link" href="/logout.jsp">로그아웃</a></li>
                         <li class="nav-item h5"><a class="nav-link" href="/mypage">마이페이지</a></li>
                     </c:if>
 
@@ -53,9 +54,9 @@
     <section class="py-5" id="features">
         <div class="container px-5 my-5">
             <div class="row gx-5">
-                <div class="col-lg-4 mb-5 mb-lg-0 ">
+                <div class="col-xl-4 mb-5 mb-lg-0 ">
                     <div class="border rounded-3 p-5">
-                        <c:if test="${userVO == null}" >
+                        <c:if test="${user == null}" >
                             <form action="/login" method="post">
                                 <h3>로그인</h3>
                                 <div class="row flex-nowrap g-2 align-items-center my-2">
@@ -90,10 +91,10 @@
                                 </p>
                             </form>
                         </c:if>
-                        <c:if test="${userVO != null}">
+                        <c:if test="${user != null}">
                             <p>로그인 성공</p>
-                            <p>아이디 : ${userVO.userID}</p>
-                            <p>닉네임 : ${userVO.nickname}</p>
+                            <p>아이디 : ${user.userID}</p>
+                            <p>닉네임 : ${user.nickname}</p>
                         </c:if>
                     </div>
 
