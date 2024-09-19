@@ -42,4 +42,28 @@ public class UserDAO {
         return userVO;
     }
 
+    public String checkEmail(String email) {
+        String sql = "select * from user_info where user_id = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBManager.getConnection();
+            System.out.println(conn);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("user_id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt);
+        }
+        return null;
+    }
+
 }
