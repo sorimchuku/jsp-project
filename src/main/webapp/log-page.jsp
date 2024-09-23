@@ -13,7 +13,18 @@
 </head>
 <body>
 <%@include file="layout/header.jsp"%>
+<!-- Header-->
+<header class="bg-dark py-4">
+  <div class="container px-5">
+    <div class=" align-items-center justify-content-start">
+      <div class="text-xl-start">
+        <h1 class="display-8 fw-bolder text-white mb-2">개인 기록</h1>
+      </div>
+    </div>
+  </div>
+</header>
 <main>
+  <div class="container px-5 my-5">
 <div class="row p-5">
   <c:if test="${sessionScope.user == null}">
     <div class="border rounded-3 w-75 p-4 py-5 mx-auto d-flex flex-column justify-content-center align-items-center">
@@ -25,23 +36,39 @@
     <c:if test="${boardList != null}">
   <div class="col-6">
       <c:forEach var="board" items="${boardList}">
-        <div class="border rounded-3 p-4 mb-4">
-          <h4>${board.title}</h4>
+        <div class="border rounded-3 p-4 mb-4" role="button" onclick="location.href='/blog/view?id=${board.post_id}'">
+          <div class="d-flex gap-2 justify-content-start align-items-center">
+            <span class="h4">${board.title}</span>
+            <c:if test="${board.is_private == true}">
+              <i class="bi bi-lock-fill text-secondary"></i>
+            </c:if>
+
+          </div>
+
           <p>${board.content}</p>
           <div>
-            <span>${board.date}</span>
-            <span>${board.running_distance}</span>
-            <span>${board.running_time}</span>
+            <p>${board.date}</p>
+            <span>${board.running_distance}km</span>
+            <span> · </span>
+            <span id="runningTime_${board.post_id}"></span>
           </div>
         </div>
+        <script>
+            let start_time_${board.post_id} = "${board.start_time}";
+            let end_time_${board.post_id} = "${board.end_time}";
+            if(start_time_${board.post_id} != "" && end_time_${board.post_id} != "") {
+                document.querySelector("#runningTime_${board.post_id}").innerHTML = getRunningTime(start_time_${board.post_id}, end_time_${board.post_id});
+            }
+        </script>
       </c:forEach>
   </div>
       <div class="col-6">
+        <button class="w-100 btn btn-primary mb-4 py-3 fs-5" onclick="location.href='/blog/write'">글쓰기</button>
         <div class="border rounded-3 p-4 h-50">대시보드</div>
       </div>
     </c:if>
 
-
+</div>
 </div>
 </main>
 <%@include file="layout/footer.jsp"%>

@@ -4,6 +4,8 @@ public class BoardVO {
     private int post_id;
     private String title, date, content;
     private String running_time = null, running_distance = null;
+    private String start_time = null;
+    private String end_time = null;
     private String location = null;
     private int member_num = 0;
     private String img_url = null;
@@ -11,6 +13,22 @@ public class BoardVO {
     private String user_id;
     private String board_type;
     private int read_count = 0;
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
+    }
+
+    public String getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
+    }
 
     public int getPost_id() {
         return post_id;
@@ -84,7 +102,7 @@ public class BoardVO {
         this.img_url = img_url;
     }
 
-    public boolean isIs_private() {
+    public boolean getIs_private() {
         return is_private;
     }
 

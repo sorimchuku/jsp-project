@@ -1,7 +1,6 @@
 package com.busanit.jspproject.dao;
 
 import com.busanit.jspproject.dto.BoardVO;
-import com.busanit.jspproject.dto.UserVO;
 import util.DBManager;
 
 import java.sql.Connection;
@@ -11,6 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDAO {
+    public void updateCount(String postID, String boardName) {
+        String sql = "update " + boardName + " set read_count = read_count + 1 where post_id = ?";
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, postID);
+            int rs = pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt);
+        }
+    }
+
     public List<BoardVO> getBlogList(String userID) {
         List<BoardVO> list = new ArrayList<BoardVO>();
         Connection conn = null;
@@ -30,7 +47,8 @@ public class BoardDAO {
                 board.setTitle(rs.getString("title"));
                 board.setDate(rs.getString("date"));
                 board.setContent(rs.getString("content"));
-                board.setRunning_time(rs.getString("running_time"));
+                board.setStart_time(rs.getString("start_time"));
+                board.setEnd_time(rs.getString("end_time"));
                 board.setRunning_distance(rs.getString("running_distance"));
                 board.setIs_private(rs.getBoolean("is_private"));
                 board.setUser_id(rs.getString("user_id"));
@@ -44,6 +62,89 @@ public class BoardDAO {
         }
 
         return list;
+    }
+
+    public void insertLog(BoardVO board, String userID) {
+        String sql = "INSERT INTO log_page (title, start_time, end_time, running_distance, content, is_private, user_id, board_type) values (?, ?, ?,  ?, ?, ?, ?, ?)";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, board.getTitle());
+            ps.setString(2, board.getStart_time());
+            ps.setString(3, board.getEnd_time());
+            ps.setString(4, board.getRunning_distance());
+            ps.setString(5, board.getContent());
+            ps.setBoolean(6, board.getIs_private());
+            ps.setString(7, userID);
+            ps.setString(8, board.getBoard_type());
+
+            int rs = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, ps);
+        }
+    }
+
+    public void updateBlog(BoardVO board, String userID) {
+        String sql = "update log_page set title = ?, start_time = ? , end_time = ? , running_distance = ?, content = ?, is_private = ? where post_id = ? and user_id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, board.getTitle());
+            ps.setString(2, board.getStart_time());
+            ps.setString(3, board.getEnd_time());
+            ps.setString(4, board.getRunning_distance());
+            ps.setString(5, board.getContent());
+            ps.setBoolean(6, board.getIs_private());
+            ps.setInt(7, board.getPost_id());
+            ps.setString(8, userID);
+
+            int rs = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, ps);
+        }
+
+    }
+
+    public BoardVO viewBlog(String postID) {
+        BoardVO board = new BoardVO();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select * from log_page where post_id=?";
+
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, postID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                board.setPost_id(rs.getInt("post_id"));
+                board.setTitle(rs.getString("title"));
+                board.setDate(rs.getString("date"));
+                board.setStart_time(rs.getString("start_time"));
+                board.setEnd_time(rs.getString("end_time"));
+                board.setContent(rs.getString("content"));
+                board.setRunning_distance(rs.getString("running_distance"));
+                board.setIs_private(rs.getBoolean("is_private"));
+                board.setUser_id(rs.getString("user_id"));
+
+            }
+
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, ps, rs);
+        }
+        return board;
     }
 }
 
