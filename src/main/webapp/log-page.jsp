@@ -9,7 +9,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-  <title>Blog</title>
+  <title>개인 기록</title>
 </head>
 <body>
 <%@include file="layout/header.jsp"%>
@@ -34,9 +34,9 @@
   </c:if>
 
     <c:if test="${boardList != null}">
-  <div class="col-6">
+  <div class="col-6 d-flex flex-column justify-content-center">
       <c:forEach var="board" items="${boardList}">
-        <div class="border rounded-3 p-4 mb-4" role="button" onclick="location.href='/blog/view?id=${board.post_id}'">
+        <div class="border rounded-3 p-4 mb-2" role="button" onclick="location.href='/blog/view?id=${board.post_id}'">
           <div class="d-flex gap-2 justify-content-start align-items-center">
             <span class="h4">${board.title}</span>
             <c:if test="${board.is_private == true}">
@@ -61,6 +61,7 @@
             }
         </script>
       </c:forEach>
+    <button class="btn btn-light mx-auto my-1">더 불러오기</button>
   </div>
       <div class="col-6">
         <button class="w-100 btn btn-primary mb-4 py-3 fs-5" onclick="location.href='/blog/write'">글쓰기</button>

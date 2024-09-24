@@ -1,6 +1,7 @@
 package com.busanit.jspproject.dao;
 
 import com.busanit.jspproject.dto.BoardVO;
+import com.busanit.jspproject.dto.UserVO;
 import util.DBManager;
 
 import java.sql.Connection;
@@ -145,6 +146,25 @@ public class BoardDAO {
             DBManager.close(conn, ps, rs);
         }
         return board;
+    }
+
+    public void deleteBlog(String postID, UserVO user) {
+        String sql = "delete from log_page where post_id=? and user_id=?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, postID);
+            ps.setString(2, user.getUserID());
+            int rs = ps.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, ps);
+        }
+
     }
 }
 

@@ -75,7 +75,7 @@
                                     <span class="h4 fw-bold">${user.nickname}</span>
                                     <span style="color: gray">${user.userID}</span>
                                 </div>
-                                <div class="d-md-inline d-flex justify-content-center gap-4 btn-group-lg">
+                                <div class="d-md-inline d-flex justify-content-center gap-4 btn-group-lg text-nowrap">
                                     <button class="btn btn-secondary mx-1" onclick="location.href='/logout.jsp'">로그아웃</button>
                                     <button class="btn btn-secondary mx-1">마이페이지</button>
                                 </div>

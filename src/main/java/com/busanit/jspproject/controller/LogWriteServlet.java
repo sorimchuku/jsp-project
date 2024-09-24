@@ -33,6 +33,9 @@ public class LogWriteServlet extends HttpServlet {
 
         String start_time = request.getParameter("start_time");
         String end_time = request.getParameter("end_time");
+
+
+
         BoardVO board = new BoardVO();
         board.setTitle(request.getParameter("title"));
         board.setContent(request.getParameter("content"));
