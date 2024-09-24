@@ -13,7 +13,6 @@ public class PageHandler {
         this.totalCnt = totalCnt;
         this.currentPage = currentPage;
         this.pageSize = pageSize;
-
         totalPages  = (int)Math.ceil((double)totalCnt / pageSize);
         beginPage = ((currentPage - 1) / navSize) * navSize + 1;
         endPage = Math.min(beginPage + navSize - 1, totalPages - 1);

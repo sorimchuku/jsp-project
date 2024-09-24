@@ -29,17 +29,43 @@ public class BoardDAO {
         }
     }
 
-    public List<BoardVO> getBlogList(String userID) {
+    public int getBlogCount(String userID) {
+        String sql = "select count(*) from log_page where user_id = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int count = 0;
+
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userID);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return count;
+    }
+
+    public List<BoardVO> getBlogList(String userID, int offset, int limit) {
         List<BoardVO> list = new ArrayList<BoardVO>();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from log_page where user_id=? order by post_id desc";
+        String sql = "select * from log_page where user_id=? order by post_id desc limit ?, ?";
 
         try {
             conn = DBManager.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, userID);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
 
             rs = ps.executeQuery();
             while (rs.next()) {

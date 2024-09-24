@@ -61,7 +61,12 @@
             }
         </script>
       </c:forEach>
-    <button class="btn btn-light mx-auto my-1">더 불러오기</button>
+    <c:if test="${showNext == true}" >
+      <form action="/blog" method="get" class="  mx-auto my-1">
+        <input type="hidden" name="page" value="${currentPage + 1}">
+        <button type="submit" class="btn btn-light">더 불러오기</button>
+      </form>
+    </c:if>
   </div>
       <div class="col-6">
         <button class="w-100 btn btn-primary mb-4 py-3 fs-5" onclick="location.href='/blog/write'">글쓰기</button>

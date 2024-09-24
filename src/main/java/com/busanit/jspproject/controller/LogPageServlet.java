@@ -4,6 +4,7 @@ import com.busanit.jspproject.dao.BoardDAO;
 import com.busanit.jspproject.dto.BoardVO;
 import com.busanit.jspproject.dto.UserVO;
 import util.PageHandler;
+import util.PageScrollHandler;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -21,13 +22,28 @@ public class LogPageServlet extends HttpServlet {
         UserVO user = (UserVO) session.getAttribute("user");
         if (user != null) {
             String userID = user.getUserID();
-            System.out.println(userID);
 
             BoardDAO dao = new BoardDAO();
 
-            List<BoardVO> boardList = dao.getBlogList(userID);
+            int blogCount = dao.getBlogCount(userID);
 
+            int currentPage = 1;
+            String currentPageStr = request.getParameter("page");
+            if (currentPageStr != null) {
+                currentPage = Integer.parseInt(currentPageStr);
+            }
+
+
+            PageScrollHandler pageHandler = new PageScrollHandler(blogCount, currentPage);
+
+            int lastPost = currentPage * pageHandler.getPageSize();
+            List<BoardVO> boardList = dao.getBlogList(userID, 1, lastPost);
+
+            System.out.println(pageHandler.getLastPost());
             request.setAttribute("boardList", boardList);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("showNext", pageHandler.isShowNext());
+            System.out.println(pageHandler.isShowNext());
         }
 
         request.getRequestDispatcher(url).forward(request, response);
@@ -35,6 +51,6 @@ public class LogPageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 }
