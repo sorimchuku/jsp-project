@@ -108,3 +108,31 @@ function checkLogin() {
     return true;
 }
 
+function checkLogWrite() {
+    const titleInput = document.querySelector("form [name=title]");
+
+    if(titleInput.value.length <= 0) {
+        alert("제목은 필수 입력 사항입니다.");
+        titleInput.focus();
+        return  false;
+    }
+
+    return true;
+}
+
+function getRunningTime(start_time, end_time) {
+    let start = new Date(start_time);
+    let end = new Date(end_time);
+
+    // 시간 차이를 밀리초 단위로 계산
+    let durationInMillis = end - start;
+
+    // 밀리초를 시간과 분으로 변환
+    let hours = Math.floor(durationInMillis / (1000 * 60 * 60));
+    let minutes = Math.floor((durationInMillis % (1000 * 60 * 60)) / (1000 * 60));
+
+    // hh:MM 형식의 문자열로 반환
+    let timestr =  `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+
+    return timestr;
+}
