@@ -10,6 +10,7 @@
   <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body>
+<!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container px-5">
     <a class="navbar-brand" href="/">홈</a>

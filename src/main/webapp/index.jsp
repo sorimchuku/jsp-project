@@ -17,7 +17,9 @@
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body class="d-flex flex-column h-100">
+<!-- Header-->
 <%@include file="layout/header.jsp"%>
+
 <main class="flex-shrink-0">
     <section class="py-5" id="features">
         <div class="container px-5 my-5">
@@ -75,7 +77,7 @@
         </div>
     </section>
 
-<%@include file="layout/footer.jsp"%>
+    <%@include file="layout/footer.jsp"%>
 </main>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
