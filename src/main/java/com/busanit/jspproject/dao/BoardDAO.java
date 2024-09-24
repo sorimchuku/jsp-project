@@ -153,7 +153,7 @@ public class BoardDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from user_info u inner join team_board t on u.user_id = t.user_id order by t.post_id desc";
+        String sql = "select  from user_info u inner join team_board t on u.user_id = t.user_id order by t.post_id desc";
 
         try {
             conn = DBManager.getConnection();
@@ -282,5 +282,37 @@ public class BoardDAO {
         }
     }
 
-}
+    public BoardVO viewFreeBoard(String id) {
+        BoardVO board = new BoardVO();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select * from free_board where post_id=?";
 
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                board.setPost_id(rs.getInt("post_id"));
+                board.setTitle(rs.getString("title"));
+                board.setDate(rs.getString("date"));
+                board.setContent(rs.getString("content"));
+                board.setUser_id(rs.getString("user_id"));
+                board.setRead_count(rs.getInt("read_count"));
+
+
+            }
+
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, ps, rs);
+        }
+        return board;
+    }
+
+
+
+}

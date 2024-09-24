@@ -11,7 +11,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-  <title>Blog</title>
+  <title>team</title>
   <!-- Favicon-->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <!-- Bootstrap icons-->
@@ -35,25 +35,24 @@
 <main>
   <div class="container px-5 my-5">
     <div class="border-bottom px-4 mb-4 d-flex justify-content-between align-items-center">
-      <span class="h4 fw-bold">모집 게시판 상세페이지</span>
+      <span class="h4 fw-bold">상세페이지</span>
       <div class="d-flex justify-content-center gap-3 my-4">
         <button class="btn btn-primary px-3" onclick="location.href='/team/write'">글쓰기</button>
         <button class="btn btn-light px-3" onclick="location.href='/team/edit?id=${board.post_id}'">수정</button>
         <button class="btn btn-light px-3" onclick="location.href='/team/delete?id=${board.post_id}'">삭제</button>
-
       </div>
     </div>
+
     <c:if test="${board != null}">
+
       <div class="d-flex justify-content-between mb-4 px-4">
         <h4 class="">${board.title}</h4>
         <span>${board.date}</span>
       </div>
-
      <div>
          ${board.title}
        <br>인원|${board.member_num}명</br>
      </div>
-
       <div class="h-25 w-100 p-4 border-bottom">${board.content}</div>
       <div class="d-flex justify-content-center m-4">
         <div class="btn-group" role="group" aria-label="Basic outlined example">
@@ -62,7 +61,6 @@
           <button type="button" class="btn btn-outline-primary">다음글</button>
         </div>
       </div>
-
     </c:if>
 
   </div>
