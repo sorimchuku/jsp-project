@@ -10,6 +10,7 @@
 <html>
 <head>
   <title>개인 기록</title>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
 <%@include file="layout/header.jsp"%>
@@ -70,7 +71,10 @@
   </div>
       <div class="col-6">
         <button class="w-100 btn btn-primary mb-4 py-3 fs-5" onclick="location.href='/blog/write'">글쓰기</button>
-        <div class="border rounded-3 p-4 h-50">대시보드</div>
+        <div class="border rounded p-4">
+          <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        </div>
+
       </div>
     </c:if>
 
@@ -79,4 +83,62 @@
 </main>
 <%@include file="layout/footer.jsp"%>
 </body>
+<script>
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light2",
+            title: {
+                text: "러닝 기록"
+            },
+            axisY: {
+                title: "달린 거리 (km)"
+            },
+            axisY2: {
+                title: "달린 시간 (분)"
+            },
+            data: [{
+                type: "column",
+                name: "Distance",
+                showInLegend: true,
+                dataPoints: [
+                    <c:forEach var="board" items="${boardList}">
+                    { label: formatDate("${board.date}"), y: ${board.running_distance} },
+                    </c:forEach>
+                ]
+            },
+                {
+                    type: "line",
+                    name: "Time",
+                    axisYType: "secondary",
+                    showInLegend: true,
+                    dataPoints: [
+                        <c:forEach var="board" items="${boardList}">
+                        { label: formatDate("${board.date}"), y: getRunningTimeInMinutes("${board.start_time}", "${board.end_time}") },
+                        </c:forEach>
+                    ]
+                }]
+        });
+        chart.render();
+    }
+
+    function formatDate(dateString) {
+        let date = new Date(dateString);
+        let formattedStr = date.toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        }).replace(/\./g, '').replace(/\s/g, '-');
+        return formattedStr;
+    }
+
+    function getRunningTimeInMinutes(startTime, endTime) {
+        // Calculate the running time in minutes
+        let start = new Date(startTime);
+        let end = new Date(endTime);
+        let diff = (end - start) / 1000 / 60; // Convert milliseconds to minutes
+        return diff;
+    }
+</script>
+
 </html>

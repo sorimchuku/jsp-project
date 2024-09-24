@@ -37,7 +37,7 @@ public class LogPageServlet extends HttpServlet {
             PageScrollHandler pageHandler = new PageScrollHandler(blogCount, currentPage);
 
             int lastPost = currentPage * pageHandler.getPageSize();
-            List<BoardVO> boardList = dao.getBlogList(userID, 1, lastPost);
+            List<BoardVO> boardList = dao.getBlogList(userID, 0, lastPost);
 
             System.out.println(pageHandler.getLastPost());
             request.setAttribute("boardList", boardList);

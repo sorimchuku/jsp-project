@@ -111,11 +111,14 @@
                   <h6 class="col-sm-2 col-form-label col-form-label-lg">지역</h6>
                   <div class="col-10 ">
                     <label class="visually-hidden" for="location_select">지역</label>
-                    <select class="form-select form-select-lg" id="location_select">
+                    <select class="form-select form-select-lg" id="location_select" name="location_select">
                       <option selected value="" >선택하세요</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      <%
+                        String[] busanDistricts = {"강서구", "금정구", "기장군", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구"};
+                        for (String district : busanDistricts) {
+                          out.println("<option value=\"" + district + "\">" + district + "</option>");
+                        }
+                      %>
                     </select>
                   </div>
                 </div>

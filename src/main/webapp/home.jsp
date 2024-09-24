@@ -17,7 +17,7 @@
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body class="d-flex flex-column h-100">
-<%@include file="layout/header.jsp"%>
+<%@include file="/layout/header.jsp"%>
 <!-- Header-->
 <header class="bg-dark py-4">
     <div class="container px-5">
@@ -77,30 +77,52 @@
                                 </div>
                                 <div class="d-md-inline d-flex justify-content-center gap-4 btn-group-lg text-nowrap">
                                     <button class="btn btn-secondary mx-1" onclick="location.href='/logout.jsp'">로그아웃</button>
-                                    <button class="btn btn-secondary mx-1">마이페이지</button>
+                                    <button class="btn btn-secondary mx-1" onclick="location.href='/mypage'">마이페이지</button>
                                 </div>
                             </div>
                         </c:if>
                     </div>
+                    <c:if test="${user == null}">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center border-bottom p-4 my-4 w-100">
+                                <span class="fs-5">로그인하면 개인 기록을 작성할 수 있습니다.</span>
+                            </div>
+                        </div>
+                    </c:if>
                     <c:if test="${user != null}">
                     <div>
                         <div class="d-flex justify-content-between align-items-center border-bottom p-4 my-4 w-100">
-                            <span class="fs-4">내 블로그</span>
+                            <span class="fs-4">개인 기록</span>
                             <button class="btn btn-light" onclick="location.href='/blog'">더보기</button>
                         </div>
 
-                        <c:if test="${boardList != null}">
-                            <div class="col-6">
-                                <c:forEach var="board" items="${boardList}">
-                                    <div class="border rounded-3 p-4 mb-4">
-                                        <h4>${board.title}</h4>
-                                        <p>${board.content}</p>
+                        <c:if test="${blogList != null}">
+                            <div class="d-flex flex-column justify-content-center">
+                                <c:forEach var="blog" items="${blogList}">
+                                    <div class="border rounded-3 p-4 mb-2" role="button" onclick="location.href='/blog/view?id=${blog.post_id}'">
+                                        <div class="d-flex gap-2 justify-content-start align-items-center">
+                                            <span class="h4">${blog.title}</span>
+                                            <c:if test="${blog.is_private == true}">
+                                                <i class="bi bi-lock-fill text-secondary"></i>
+                                            </c:if>
+
+                                        </div>
+
+                                        <p>${blog.content}</p>
                                         <div>
-                                            <span>${board.date}</span>
-                                            <span>${board.running_distance}</span>
-                                            <span>${board.running_time}</span>
+                                            <p>${blog.date}</p>
+                                            <span>${blog.running_distance}km</span>
+                                            <span> · </span>
+                                            <span id="runningTime_${blog.post_id}"></span>
                                         </div>
                                     </div>
+                                    <script>
+                                        let start_time_${blog.post_id} = "${blog.start_time}";
+                                        let end_time_${blog.post_id} = "${blog.end_time}";
+                                        if(start_time_${blog.post_id} != "" && end_time_${blog.post_id} != "") {
+                                            document.querySelector("#runningTime_${blog.post_id}").innerHTML = getRunningTime(start_time_${blog.post_id}, end_time_${blog.post_id});
+                                        }
+                                    </script>
                                 </c:forEach>
                             </div>
                         </c:if>
@@ -108,19 +130,15 @@
                     </div>
                     </c:if>
                 </div>
-                <div class="col-lg-8">
-                    게시글 미리보기 섹션
-                </div>
-
             </div>
         </div>
     </section>
 
-<%@include file="layout/footer.jsp"%>
+<%@include file="/layout/footer.jsp"%>
 </main>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
-<script src="js/scripts.js"></script>
+<script src="${pageContext.request.contextPath}/js/scripts.js"></script>
 </body>
 </html>
