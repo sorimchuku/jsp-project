@@ -23,20 +23,21 @@
         </c:if>
 
         <div id="wrap" align="center">
-            <h1>모집 게시판 글쓰기</h1>
-            <form action="/team/write" method="post">
+            <h1>모집 게시판 수정</h1>
+            <form action="/team/edit" method="post">
+                <input type="hidden" value="${board.post_id}" name="id">
                 <table>
                     <tr>
                         <th>제목</th>
-                        <td><input type="text" size="70" name="title"> * 필수</td>
+                        <td><input type="text" size="70" name="title" value="${board.title}">  * 필수</td>
                     </tr>
                     <tr>
                         <th>지역</th>
-                        <td><input type="text" size="35" name="location"></td>
+                        <td><input type="text" size="35" name="location" value="${board.location}"></td>
                     </tr>
                     <tr>
                         <th>인원수</th>
-                        <td><input type="text" size="35" name="member_num"></td>
+                        <td><input type="text" size="35" name="member_num" value="${board.member_num}"></td>
                     </tr>
                     <tr>
                         <th>이미지</th>
@@ -44,7 +45,7 @@
                     </tr>
                     <tr>
                         <th>내용</th>
-                        <td><textarea cols="70" rows="15" name="content"></textarea></td>
+                        <td><textarea cols="70" rows="15" name="content">${board.content}</textarea></td>
                     </tr>
                 </table>
                 <br><br>

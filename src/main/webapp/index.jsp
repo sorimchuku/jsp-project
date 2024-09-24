@@ -17,17 +17,9 @@
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body class="d-flex flex-column h-100">
-<%@include file="layout/header.jsp"%>
 <!-- Header-->
-<header class="bg-dark py-4">
-    <div class="container px-5">
-        <div class=" align-items-center justify-content-start">
-            <div class="text-xl-start">
-                <h1 class="display-8 fw-bolder text-white mb-2">홈</h1>
-            </div>
-        </div>
-    </div>
-</header>
+<%@include file="layout/header.jsp"%>
+
 <main class="flex-shrink-0">
     <section class="py-5" id="features">
         <div class="container px-5 my-5">
@@ -70,43 +62,12 @@
                             </form>
                         </c:if>
                         <c:if test="${user != null}">
-                            <div class="d-flex flex-lg-column d-md-inline-flex justify-content-md-between w-100">
-                                <div class="mb-4">
-                                    <span class="h4 fw-bold">${user.nickname}</span>
-                                    <span style="color: gray">${user.userID}</span>
-                                </div>
-                                <div class="d-md-inline d-flex justify-content-center gap-4 btn-group-lg">
-                                    <button class="btn btn-secondary mx-1" onclick="location.href='/logout.jsp'">로그아웃</button>
-                                    <button class="btn btn-secondary mx-1">마이페이지</button>
-                                </div>
-                            </div>
+                            <p>로그인 성공</p>
+                            <p>아이디 : ${user.userID}</p>
+                            <p>닉네임 : ${user.nickname}</p>
                         </c:if>
                     </div>
-                    <c:if test="${user != null}">
-                    <div>
-                        <div class="d-flex justify-content-between align-items-center border-bottom p-4 my-4 w-100">
-                            <span class="fs-4">내 블로그</span>
-                            <button class="btn btn-light" onclick="location.href='/blog'">더보기</button>
-                        </div>
 
-                        <c:if test="${boardList != null}">
-                            <div class="col-6">
-                                <c:forEach var="board" items="${boardList}">
-                                    <div class="border rounded-3 p-4 mb-4">
-                                        <h4>${board.title}</h4>
-                                        <p>${board.content}</p>
-                                        <div>
-                                            <span>${board.date}</span>
-                                            <span>${board.running_distance}</span>
-                                            <span>${board.running_time}</span>
-                                        </div>
-                                    </div>
-                                </c:forEach>
-                            </div>
-                        </c:if>
-
-                    </div>
-                    </c:if>
                 </div>
                 <div class="col-lg-8">
                     게시글 미리보기 섹션
@@ -116,10 +77,13 @@
         </div>
     </section>
 
-<%@include file="layout/footer.jsp"%>
+    <%@include file="layout/footer.jsp"%>
 </main>
 <!-- Bootstrap core JS-->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 </body>
