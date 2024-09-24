@@ -32,14 +32,6 @@
                         <td><input type="text" size="70" name="title" value="${board.title}">  * 필수</td>
                     </tr>
                     <tr>
-                        <th>지역</th>
-                        <td><input type="text" size="35" name="location" value="${board.location}"></td>
-                    </tr>
-                    <tr>
-                        <th>인원수</th>
-                        <td><input type="text" size="35" name="member_num" value="${board.member_num}"></td>
-                    </tr>
-                    <tr>
                         <th>이미지</th>
                         <td><input type="file" name="img"><input type="submit" value="upload"></td>
                     </tr>

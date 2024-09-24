@@ -18,7 +18,7 @@ public class FreeBoardViewServlet extends HttpServlet {
         String id = request.getParameter("id");
 
         BoardDAO dao = new BoardDAO();
-        BoardVO board = dao.viewTeam(id);
+        BoardVO board = dao.viewFreeBoard(id);
 
         request.setAttribute("board", board);
         request.getRequestDispatcher(url).forward(request, response);

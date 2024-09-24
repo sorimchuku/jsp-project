@@ -16,7 +16,7 @@ import java.io.IOException;
 public class FreeBoardWriteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = "/joinBoardWrite.jsp";
+        String url = "/freeBoardWrite.jsp";
 
         request.getRequestDispatcher(url).forward(request, response);
 
@@ -33,12 +33,10 @@ public class FreeBoardWriteServlet extends HttpServlet {
         BoardVO board = new BoardVO();
         board.setTitle(request.getParameter("title"));
         board.setContent(request.getParameter("content"));
-        board.setLocation(request.getParameter("location"));
-        board.setMember_num(Integer.parseInt(request.getParameter("member_num")));
-        board.setBoard_type("team");
+        board.setBoard_type("free_board");
 
         BoardDAO dao = new BoardDAO();
-        dao.insertTeam(board, user.getUserID());
-        response.sendRedirect("/team");
+        dao.insertFreeBoard(board, user.getUserID());
+        response.sendRedirect("/freeboard");
     }
 }

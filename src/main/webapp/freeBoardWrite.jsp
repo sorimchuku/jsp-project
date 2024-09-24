@@ -24,7 +24,7 @@
 
         <div id="wrap" align="center">
             <h1>자유 게시판 글쓰기</h1>
-            <form action="freeboard/write" method="post" >
+            <form action="/freeboard/write" method="post" >
                 <table>
                     <tr>
                         <th>제목</th>
@@ -45,7 +45,7 @@
                 <input type="button" value="목록" onclick="location.href='/board/list'">
             </form>
         </div>
-
+        
 
         <header class="py-5 text-center">
             <h1>댓글</h1>

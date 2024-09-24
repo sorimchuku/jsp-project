@@ -378,6 +378,56 @@ public class BoardDAO {
         }
     }
 
+    public void insertFreeBoard(BoardVO board, String userID) {
+        String sql = "INSERT INTO Free_board (title, content, user_id, board_type) values (?, ?, ?, ?)";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, board.getTitle());
+            ps.setString(2, board.getContent());
+            ps.setString(3, userID);
+            ps.setString(4, board.getBoard_type());
 
+            int rs = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, ps);
+        }
+    }
+
+
+    public List<BoardTeamVO> getJoinFreeBoardList() {
+        List<BoardTeamVO> list = new ArrayList<BoardTeamVO>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select f.post_id, f.title, f.date, f.user_id, f.board_type, u.nickname, from user_info u inner join free_board f on u.user_id = f.user_id order by f.post_id desc";
+
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                BoardTeamVO board = new BoardTeamVO();
+                board.setPost_id(rs.getInt("post_id"));
+                board.setTitle(rs.getString("title"));
+                board.setDate(rs.getString("date"));
+                board.setUser_id(rs.getString("user_id"));
+                board.setBoard_type(rs.getString("board_type"));
+                board.setNickname(rs.getString("nickname"));
+                list.add(board);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, ps, rs);
+        }
+
+        return list;
+    }
 
 }

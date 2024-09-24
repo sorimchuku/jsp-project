@@ -9,7 +9,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-  <title>freeboard</title>
+  <title>자유 게시판</title>
 </head>
 <body>
 <%@include file="layout/header.jsp"%>
@@ -30,15 +30,18 @@
 
       <tbody>
       <c:forEach var="board" items="${boardList}">
-            <tr>
-              <td>${board.post_id}</td>
-              <td>
-                <a href="/freeboard/view?id=${board.post_id}">
-                    ${board.title}</a>
-              </td>
-              <td>${board.nickname}</td>
-              <td>${board.date}</td>
-            </tr>
+        <tr>
+          <td>${board.post_id}</td>
+          <td colspan="2">
+            <a href="/team/view?id=${board.post_id}" class="text-decoration-none">
+              <div class="fs-5 text-black mb-1">
+                  ${board.title}
+              </div>
+            </a>
+          </td>
+          <td>${board.nickname}</td>
+          <td>${board.date}</td>
+        </tr>
       </c:forEach>
       </tbody>
 

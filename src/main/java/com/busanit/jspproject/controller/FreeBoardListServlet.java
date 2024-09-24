@@ -18,7 +18,7 @@ public class FreeBoardListServlet extends HttpServlet {
         String url = "/freeBoardList.jsp";
 
         BoardDAO dao = new BoardDAO();
-        List<BoardTeamVO> boardList = dao.getJoinList();
+        List<BoardTeamVO> boardList = dao.getJoinFreeBoardList();
 
         request.setAttribute("boardList", boardList);
         request.getRequestDispatcher(url).forward(request, response);

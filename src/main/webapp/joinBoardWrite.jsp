@@ -33,9 +33,9 @@
       <button type="button" class="btn btn-primary" onclick="location.href='/'">메인으로</button>
     </div>
     </c:if>
+
     <c:if test="${sessionScope.user != null}">
     <div id="wrap" align="center">
-
       <form action="/team/write" method="post">
         <table>
           <tr>
