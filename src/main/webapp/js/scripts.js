@@ -132,7 +132,7 @@ function getRunningTime(start_time, end_time) {
     let minutes = Math.floor((durationInMillis % (1000 * 60 * 60)) / (1000 * 60));
 
     // hh:MM 형식의 문자열로 반환
-    let timestr =  `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+    let timestr =  `${String(hours)}시간 ${String(minutes)}분`;
 
     return timestr;
 }

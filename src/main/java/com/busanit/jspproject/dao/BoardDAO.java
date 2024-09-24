@@ -2,6 +2,7 @@ package com.busanit.jspproject.dao;
 
 import com.busanit.jspproject.dto.BoardTeamVO;
 import com.busanit.jspproject.dto.BoardVO;
+import com.busanit.jspproject.dto.UserVO;
 import util.DBManager;
 
 import java.sql.Connection;
@@ -29,17 +30,43 @@ public class BoardDAO {
         }
     }
 
-    public List<BoardVO> getBlogList(String userID) {
+    public int getBlogCount(String userID) {
+        String sql = "select count(*) from log_page where user_id = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int count = 0;
+
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userID);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return count;
+    }
+
+    public List<BoardVO> getBlogList(String userID, int offset, int limit) {
         List<BoardVO> list = new ArrayList<BoardVO>();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from log_page where user_id=? order by post_id desc";
+        String sql = "select * from log_page where user_id=? order by post_id desc limit ?, ?";
 
         try {
             conn = DBManager.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, userID);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
 
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -148,12 +175,31 @@ public class BoardDAO {
         return board;
     }
 
+    public void deleteBlog(String postID, UserVO user) {
+        String sql = "delete from log_page where post_id=? and user_id=?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, postID);
+            ps.setString(2, user.getUserID());
+            int rs = ps.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, ps);
+        }
+
+    }
+
     public List<BoardTeamVO> getJoinList() {
         List<BoardTeamVO> list = new ArrayList<BoardTeamVO>();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select  from user_info u inner join team_board t on u.user_id = t.user_id order by t.post_id desc";
+        String sql = "select t.post_id, t.title, t.date, t.user_id, t.board_type, u.nickname, t.member_num, t.location from user_info u inner join team_board t on u.user_id = t.user_id order by t.post_id desc";
 
         try {
             conn = DBManager.getConnection();
@@ -169,8 +215,7 @@ public class BoardDAO {
                 board.setBoard_type(rs.getString("board_type"));
                 board.setNickname(rs.getString("nickname"));
                 board.setMember_num(rs.getInt("member_num"));
-
-
+                board.setLocation(rs.getString("location"));
                 list.add(board);
             }
         } catch (Exception e) {
@@ -185,7 +230,7 @@ public class BoardDAO {
 
 
     public void insertTeam(BoardVO board, String userID) {
-        String sql = "INSERT INTO team_board (title, location, member_num, date, content, user_id, board_type) values (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO team_board (title, location, member_num, content, user_id, board_type) values (?, ?, ?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -194,10 +239,9 @@ public class BoardDAO {
             ps.setString(1, board.getTitle());
             ps.setString(2, board.getLocation());
             ps.setInt(3, board.getMember_num());
-            ps.setString(4, board.getDate());
-            ps.setString(5, board.getContent());
-            ps.setString(6, userID);
-            ps.setString(7, board.getBoard_type());
+            ps.setString(4, board.getContent());
+            ps.setString(5, userID);
+            ps.setString(6, board.getBoard_type());
 
             int rs = ps.executeUpdate();
         } catch (Exception e) {
@@ -208,11 +252,12 @@ public class BoardDAO {
     }
 
     public BoardVO viewTeam(String postID) {
-        BoardVO board = new BoardVO();
+        BoardTeamVO board = new BoardTeamVO();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from team_board where post_id=?";
+        String sql = "select t.post_id, t.title, t.date, t.user_id, t.board_type, u.nickname, t.member_num, t.location, t.content, t.read_count from user_info u inner join team_board t on u.user_id = t.user_id where post_id = ?";
+
 
         try {
             conn = DBManager.getConnection();
@@ -228,6 +273,7 @@ public class BoardDAO {
                 board.setContent(rs.getString("content"));
                 board.setRead_count(rs.getInt("read_count"));
                 board.setUser_id(rs.getString("user_id"));
+                board.setNickname(rs.getString("nickname"));
 
             }
 

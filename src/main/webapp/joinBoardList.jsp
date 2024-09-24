@@ -9,32 +9,50 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-  <title>Blog</title>
+  <title>모집 게시판</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body>
 <%@include file="layout/header.jsp"%>
+<!-- Header-->
+<header class="bg-dark py-4">
+  <div class="container px-5">
+    <div class=" align-items-center justify-content-start">
+      <div class="text-xl-start">
+        <h1 class="display-8 fw-bolder text-white mb-2">모집 게시판</h1>
+      </div>
+    </div>
+  </div>
+</header>
 <main>
-<div class="row p-5">
-  <div class="row p5">
-    <h2 align="center">모집 게시판</h2>
-    <table class="table table-striped table-sm">
+<div class="container text-center">
+  <div class="p-5">
+    <table class="table table-hover">
       <thead>
-      <tr>
         <th scope="col">#</th>
-        <th scope="col">제목</th>
+        <th colspan="2" scope="col">제목</th>
         <th scope="col">작성자</th>
         <th scope="col">작성일</th>
-      </tr>
       </thead>
 
       <tbody>
       <c:forEach var="board" items="${boardList}">
             <tr>
               <td>${board.post_id}</td>
-              <td>
-                <a href="/team/view?id=${board.post_id}">
-                    ${board.title}
-                  <br>인원|${board.member_num}명</br>
+              <td colspan="2">
+                <a href="/team/view?id=${board.post_id}" class="text-decoration-none">
+                  <div class="fs-5 text-black mb-1">
+                      ${board.title}
+                  </div>
+                  <div class="text-secondary mb-1">
+                    <span>${board.location}</span>
+                    <span> | </span>
+                    <span>${board.member_num}명</span>
+                  </div>
                 </a>
               </td>
               <td>${board.nickname}</td>
@@ -44,9 +62,10 @@
       </tbody>
 
     </table>
+
+    <button type="button" class="btn btn-primary mx-auto" onclick="location.href='/team/write'">글쓰기</button>
   </div>
 
-  <button type="button" onclick="location.href='/team/write'">글쓰기</button>
 
 </div>
 </main>
