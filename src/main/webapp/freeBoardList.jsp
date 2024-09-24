@@ -33,7 +33,7 @@
             <tr>
               <td>${board.post_id}</td>
               <td>
-                <a href="/team/view?id=${board.post_id}">
+                <a href="/freeboard/view?id=${board.post_id}">
                     ${board.title}</a>
               </td>
               <td>${board.nickname}</td>
@@ -46,7 +46,7 @@
   </div>
   <div class="row">
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <a class="btn btn-primary me-md-2" role="button" id="write-article">글쓰기</a>
+      <a class="btn btn-primary me-md-2" role="button" id="write-article" href="/freeboard/write">글쓰기</a>
     </div>
   </div>
 

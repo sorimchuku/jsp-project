@@ -360,5 +360,24 @@ public class BoardDAO {
     }
 
 
+    public void deleteFreeBoard(String id) {
+        String sql = "DELETE FROM free_board WHERE post_id = ?";
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt);
+        }
+    }
+
+
 
 }
