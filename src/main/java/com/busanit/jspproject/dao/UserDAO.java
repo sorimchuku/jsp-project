@@ -41,6 +41,31 @@ public class UserDAO {
         return userVO;
     }
 
+    public String checkPassword(String userID, String userPW) {
+        String sql = "select password from user_info where user_id = ? and password = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String password = null;
+
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userID);
+            pstmt.setString(2, userPW);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                password = rs.getString("password");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return password;
+    }
+
+
     public String checkEmail(String email) {
         String sql = "select * from user_info where user_id = ?";
         Connection conn = null;
@@ -81,6 +106,27 @@ public class UserDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt);
+        }
+    }
+
+    public void updateUserInfo(UserVO userVO) {
+        String sql = "update user_info set password = ?, nickname = ?, gender = ?, age = ?, location = ? where user_id = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userVO.getPassword());
+            pstmt.setString(2, userVO.getNickname());
+            pstmt.setString(3, userVO.getGender());
+            pstmt.setInt(4, userVO.getAge());
+            pstmt.setString(5, userVO.getLocation());
+            pstmt.setString(6, userVO.getUserID());
+            int rs = pstmt.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         } finally {
             DBManager.close(conn, pstmt);
         }

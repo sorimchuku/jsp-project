@@ -83,7 +83,7 @@
           <div class="col  my-1">
             <div class="input-group flex-nowrap">
               <span class="input-group-text">달린 시간</span>
-              <span class="form-control" id="running_time"></span>
+              <span class="form-control text-nowrap" id="running_time"></span>
             </div>
           </div>
           <div class="col  my-1">
@@ -133,6 +133,8 @@
     </div>
   </div>
 </div>
+
+
 
 <%@include file="layout/footer.jsp"%>
 <!-- Bootstrap core JS-->

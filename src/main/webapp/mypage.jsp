@@ -13,6 +13,39 @@
   <!-- Core theme CSS (includes Bootstrap)-->
   <link href="css/styles.css" rel="stylesheet" />
   <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script>
+      function openModal() {
+          const myModal = new bootstrap.Modal('#staticBackdrop');
+          myModal.show();
+      }
+
+      function passwordCheck() {
+          let input_pass = document.querySelector("#userPW").value.trim();
+          document.querySelector("#modal_result").innerText = "";
+          if(input_pass.length > 0) {
+              $.ajax({
+                  type: "post",
+                  url: "/mypage/passCheck",
+                  data: {
+                      userPW: input_pass,
+                  },
+                  success: function (data) {
+                      console.log(data);
+                      if(data == "true") {
+                          location.href="/mypage/update";
+                      } else {
+                          document.querySelector("#modal_result").innerText = "비밀번호가 일치하지 않습니다.";
+                      }
+                  },
+                  error: function() {
+                      console.log("서버 요청 실패");
+                  }
+              })
+          }
+
+      }
+  </script>
 </head>
 <body>
 <%@include file="layout/header.jsp"%>
@@ -27,8 +60,8 @@
   </div>
 </header>
 
-<section class="h-100 bg-dark">
-  <div class="container py-5 h-100">
+<section class="h-100">
+  <div class="container py-4">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col">
         <div class="card card-registration my-4">
@@ -71,7 +104,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end pt-3">
-                  <button class="btn btn-primary btn-lg" onclick="location.href='/mypage/update'">회원정보 수정</button>
+                  <button class="btn btn-primary btn-lg" onclick="openModal()">회원정보 수정</button>
                 </div>
 
               </div>
@@ -82,6 +115,30 @@
     </div>
   </div>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">비밀번호 확인</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <div class="input-group">
+            <span class="input-group-text">비밀번호</span>
+            <input type="password" class="form-control" id="userPW">
+            <button type="button" class="btn btn-primary" onclick="passwordCheck()">확인</button>
+          </div>
+        <span class="form-text text-danger mx-1 my-2" id="modal_result"></span>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
