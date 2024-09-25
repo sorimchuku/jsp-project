@@ -11,7 +11,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-  <title>freeboard</title>
+  <title>자유게시판</title>
   <!-- Favicon-->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
   <!-- Bootstrap icons-->
