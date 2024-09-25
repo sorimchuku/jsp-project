@@ -42,110 +42,11 @@
                 <br><br>
                 <input type="submit" value="등록">
                 <input type="reset" value="다시 작성">
-                <input type="button" value="목록" onclick="location.href='/board/list'">
+                <input type="button" value="목록" onclick="location.href='/freeboard'">
             </form>
         </div>
         
 
-        <header class="py-5 text-center">
-            <h1>댓글</h1>
-        </header>
-
-
-        <div class="row g-5">
-            <section class="col-md-3 col-lg-4 order-md-last">
-                <aside>
-                    <p>Jyc</p>
-                    <p><a href="mailto:jyc4648@gmail.com">작성자 이메일 주소</a></p>
-                    <p>
-                        <time datetime="2022-01-01T00:00:00">2022-01-01</time>
-                    </p>
-                    <p>#java</p>
-                </aside>
-            </section>
-
-            <article id="article-content" class="col-md-9 col-lg-8">
-                <pre>본문</pre>
-            </article>
-
-
-        </div>
-    </div>
-
-    <div class="row 9-5">
-        <sectoin>
-            <form class="row g-3">
-
-                <div class="col-md-9 col-lg-8">
-                    <label for="articleComment" hidden>댓글</label>
-                    <textarea class="form-control" id="articleComment" placeholder="댓글 쓰기.." rows="3"
-                              required></textarea>
-                </div>
-                <div class="col-md-3 col-lg-4">
-                    <label for="comment-submit" hidden>댓글 쓰기</label>
-                    <button class="btn btn-primary" id="comment-submit" type="submit">쓰기</button>
-                </div>
-
-            </form>
-
-            <ul id="article-comments" class="row col-md-10 col-lg-8 pt-3">
-                <li>
-                    <form>
-                        <input hidden class="article-id">
-                        <div class="row">
-                            <div class="row col-md-10 col-lg-9">
-                                <strong>Jyc</strong>
-                                <small>
-                                    <time>2022-01-01</time>
-                                </small>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
-                                    Lorem ipsum dolor sit amet
-                                </p>
-                            </div>
-                        </div>
-                    </form>
-                </li>
-                <li>
-                    <form>
-                        <input hidden class="article-id">
-                        <div class="row">
-                            <div class="row col-md-10 col-lg-9">
-                                <strong>Jyc</strong>
-                                <small>
-                                    <time>2022-01-01</time>
-                                </small>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
-                                    Lorem ipsum dolor sit amet
-                                </p>
-                            </div>
-                        </div>
-                    </form>
-                </li>
-            </ul>
-
-        </sectoin>
-    </div>
-    <div class="row g-5">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">이전글</span>
-                    </a>
-                </li>
-
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo; </span>
-                        <span class="sr-only">다음글</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
 </main>
 <%@include file="layout/footer.jsp"%>
 </body>

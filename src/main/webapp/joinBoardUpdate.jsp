@@ -9,7 +9,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>Blog</title>
+    <title>모집게시판</title>
 </head>
 <body>
 <%@include file="layout/header.jsp"%>
@@ -51,7 +51,7 @@
                 <br><br>
                 <input type="submit" value="등록">
                 <input type="reset" value="다시 작성">
-                <input type="button" value="목록" onclick="location.href='/board/list'">
+                <input type="button" value="목록" onclick="location.href='/team'">
             </form>
         </div>
 </main>

@@ -30,7 +30,6 @@ public class JoinBoardWriteServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         UserVO user = (UserVO) session.getAttribute("user");
-
         BoardVO board = new BoardVO();
         board.setTitle(request.getParameter("title"));
         board.setContent(request.getParameter("content"));

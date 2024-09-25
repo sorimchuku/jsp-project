@@ -33,7 +33,7 @@
         <tr>
           <td>${board.post_id}</td>
           <td colspan="2">
-            <a href="/team/view?id=${board.post_id}" class="text-decoration-none">
+            <a href="/freeboard/view?id=${board.post_id}" class="text-decoration-none">
               <div class="fs-5 text-black mb-1">
                   ${board.title}
               </div>
