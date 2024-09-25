@@ -69,9 +69,29 @@
       <div class="d-flex justify-content-center">
         <nav id="pagination" aria-label="Page navigation" class="col-auto ms-auto">
           <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            <li class="page-item"${pageHandler.currentPage == 1 ?  "disabled" : ""}">
+              <a class="page-link" href="/team?currentPage=1">Prev</a>
+            </li>
+            <c:if test="${pageHandler.showPrev}">
+              <li class="page-item">
+                <a class="page-link" href="/team?currentPage=${pageHandler.beginPage - 1}">back</a>
+              </li>
+            </c:if>
+            <c:forEach var="i" begin="${pageHandler.beginPage}"
+                       end="${pageHandler.endPage}">
+              <li class="page-item ${pageHandler.currentPage == i ? "active" : ""}">
+                <a class="page-link"
+                   href="/team?currentPage=${i}">${i}</a>
+              </li>
+            </c:forEach>
+            <c:if test="${pageHandler.showNext}">
+            <li class="page-item">
+              <a class="page-link" href="/team?currentPage=${pageHandler.endPage + 1}">next</a>
+              </li>
+            </c:if>
+            <li class="page-item ${pageHandler.currentPage == pageHandler.totalPages ?  "disabled" : ""}">
+              <a class="page-link" href="/team?currentPage=${pageHandler.totalPages}">End</a>
+            </li>
           </ul>
         </nav>
         <div class="col-auto ms-auto">
