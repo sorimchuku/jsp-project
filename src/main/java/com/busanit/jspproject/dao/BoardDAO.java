@@ -504,7 +504,7 @@ public List<BoardTeamVO> selectPagingTeamBoard(int offset, int pageSize) {
         try {
             conn = DBManager.getConnection();
 
-            sql = "SELECT * FROM user_info u inner join team_board t on u.user_id = t.user_id ORDER BY post_id DESC limit ?, ?";
+            sql = "SELECT t.post_id, t.title, t.content, t.date, t.user_id, t.board_type, u.nickname, t.member_num, t.location, t.read_count FROM user_info u inner join team_board t on u.user_id = t.user_id ORDER BY post_id DESC limit ?, ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, offset);
             pstmt.setInt(2, pageSize);

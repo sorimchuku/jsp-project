@@ -34,10 +34,10 @@
     <table class="table table-hover">
       <thead>
       <tr>
-        <th scope="col">#</th>
-        <th colspan="2" scope="col">제목</th>
-        <th scope="col">작성자</th>
-        <th scope="col">작성일</th>
+        <th scope="col" class="list-group-numbered">#</th>
+        <th scope="col" class="title col-6">제목</th>
+        <th scope="col" class="user-id">작성자</th>
+        <th scope="col" class="created-at">작성일</th>
       </tr>
       </thead>
 
@@ -45,7 +45,7 @@
       <c:forEach var="board" items="${boardList}">
             <tr>
               <td>${board.post_id}</td>
-              <td colspan="2">
+              <td >
                 <a href="/team/view?id=${board.post_id}" class="text-decoration-none">
                   <div class="fs-5 text-black mb-1">
                       ${board.title}
