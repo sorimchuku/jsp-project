@@ -46,7 +46,7 @@
 <main>
   <div class="container px-5 my-5">
     <div class="border-bottom px-4 mb-4 d-flex justify-content-between align-items-center">
-      <span class="h4 fw-bold">상세페이지</span>
+      <span class="h4 fw-bold">자유게시판 상세페이지</span>
       <div class="d-flex justify-content-center gap-3 my-4">
         <div class="btn-group">
           <button class="btn btn-outline-secondary" onclick="location.href='/freeboard/edit?id=${board.post_id}'">수정
@@ -67,8 +67,8 @@
 
       </div>
       <c:if test="${board.img_url != ''}">
-        <div class="card">
-          <img class="card-img" src="${pageContext.request.contextPath}/image?filename=${board.img_url}" alt="Test Image">
+        <div class="h-50">
+          <img class="" src="${pageContext.request.contextPath}/image?filename=${board.img_url}" alt="${board.img_url}">
         </div>
       </c:if>
       <div class="h-25 w-100 p-4 border-bottom">${board.content}</div>
