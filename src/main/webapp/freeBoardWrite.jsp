@@ -53,63 +53,6 @@
                 </form>
             </div>
         </c:if>
-
-    </div>
-
-    <div class="row 9-5">
-        <sectoin>
-            <form class="row g-3">
-
-                <div class="col-md-9 col-lg-8">
-                    <label for="articleComment" hidden>댓글</label>
-                    <textarea class="form-control" id="articleComment" placeholder="댓글 쓰기.." rows="3"
-                              required></textarea>
-                </div>
-                <div class="col-md-3 col-lg-4">
-                    <label for="comment-submit" hidden>댓글 쓰기</label>
-                    <button class="btn btn-primary" id="comment-submit" type="submit">쓰기</button>
-                </div>
-
-            </form>
-
-            <ul id="article-comments" class="row col-md-10 col-lg-8 pt-3">
-                <li>
-                    <form>
-                        <input hidden class="article-id">
-                        <div class="row">
-                            <div class="row col-md-10 col-lg-9">
-                                <strong>Jyc</strong>
-                                <small>
-                                    <time>2022-01-01</time>
-                                </small>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
-                                    Lorem ipsum dolor sit amet
-                                </p>
-                            </div>
-                        </div>
-                    </form>
-                </li>
-                <li>
-                    <form>
-                        <input hidden class="article-id">
-                        <div class="row">
-                            <div class="row col-md-10 col-lg-9">
-                                <strong>Jyc</strong>
-                                <small>
-                                    <time>2022-01-01</time>
-                                </small>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
-                                    Lorem ipsum dolor sit amet
-                                </p>
-                            </div>
-                        </div>
-                    </form>
-                </li>
-            </ul>
-
-        </sectoin>
     </div>
 </main>
 <%@include file="layout/footer.jsp"%>

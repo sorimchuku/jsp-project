@@ -73,7 +73,7 @@
         <div class="d-flex justify-content-center gap-3 my-4">
           <button type="submit" class="btn btn-primary px-3">등록</button>
           <input type="reset" class="btn btn-secondary px-3" value="다시 작성">
-          <input type="button" value="목록" class="btn btn-secondary px-3" onclick="location.href='/team'">
+          <a href="/team" role="button" class="btn btn-secondary px-3" >목록</a>
         </div>
       </form>
     </div>
