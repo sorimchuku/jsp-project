@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDAO {
-    public void updateCount(String postID, String boardName) {
+
+    // 모집게시판 전체 게시글 불러오기
+        public void updateCount(String postID, String boardName) {
         String sql = "update " + boardName + " set read_count = read_count + 1 where post_id = ?";
 
         Connection conn = null;
@@ -194,6 +196,74 @@ public class BoardDAO {
 
     }
 
+
+
+
+
+
+
+
+
+
+    public List<BoardVO> selectAllTeamBoard() {
+        String sql = "SELECT * FROM team_board ORDER BY post_id DESC";
+
+        List<BoardVO> boardList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                BoardVO board = new BoardVO();
+                board.setPost_id(rs.getInt("post_id"));
+                board.setUser_id(rs.getString("user_id"));
+                board.setLocation(rs.getString("location"));
+                board.setMember_num(rs.getInt("member_num"));
+                board.setTitle(rs.getString("title"));
+                board.setContent(rs.getString("content"));
+                board.setRead_count(rs.getInt("read_count"));
+                board.setDate(rs.getString("date"));
+
+                boardList.add(board);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return boardList;
+    }
+
+    public int getTeamBoardCount(String userID) {
+        String sql = "select count(*) from team_board where user_id = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int count = 0;
+
+        try {
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userID);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return count;
+    }
+
+
     public List<BoardTeamVO> getJoinList() {
         List<BoardTeamVO> list = new ArrayList<BoardTeamVO>();
         Connection conn = null;
@@ -326,6 +396,172 @@ public class BoardDAO {
             DBManager.close(conn, pstmt);
         }
     }
+/*
+    //모집 게시판 페이지네이션
+    public List<BoardVO> selectPagingTeamBoard(
+            int offset, int pageSize, String searchType, String searchText) {
+
+        String sql = "";
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<BoardTeamVO> boardList = new ArrayList<>();
+
+        try {
+            conn = DBManager.getConnection();
+
+            if (searchType != null && searchText.length() > 0) {
+                //검색 리스트 조회
+                // type : all = 제목 + 내용
+                //          title = 제목
+                //          content = 내용
+                //          name = 작성자
+                switch (searchType) {
+                    case "all":
+                        sql = "SELECT * FROM team " +
+                                "WHERE title LIKE ? OR content LIKE ? " +
+                                "ORDER BY post_id DESC limit ?, ?  ";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + searchText + "%");
+                        pstmt.setString(2, "%" + searchText + "%");
+                        pstmt.setInt(3, offset);
+                        pstmt.setInt(4, pageSize);
+                        break;
+                    case "title":
+                        sql = "SELECT * FROM team " +
+                                "WHERE title LIKE ? " +
+                                "ORDER BY post_id DESC limit ?, ?  ";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + searchText + "%");
+                        pstmt.setInt(2, offset);
+                        pstmt.setInt(3, pageSize);
+                        break;
+                    case "content":
+                        sql = "SELECT * FROM team " +
+                                "WHERE content LIKE ? " +
+                                "ORDER BY post_id DESC limit ?, ?  ";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + searchText + "%");
+                        pstmt.setInt(2, offset);
+                        pstmt.setInt(3, pageSize);
+                        break;
+                    case "name":
+                        sql = "SELECT * FROM team " +
+                                "WHERE name LIKE ? " +
+                                "ORDER BY post_id DESC limit ?, ? ";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + searchText + "%");
+                        pstmt.setInt(2, offset);
+                        pstmt.setInt(3, pageSize);
+                        break;
+                }
+            } else {
+                // 전체 리스트 조회
+                sql = "SELECT * FROM team ORDER BY post_id DESC limit ?, ?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, offset);
+                pstmt.setInt(2, pageSize);
+            }
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                BoardVO board = new BoardVO();
+                board.setPost_id(rs.getInt("post_id"));
+                board.setUser_id(rs.getString("user_id"));
+                board.setLocation(rs.getString("location"));
+                board.setMember_num(rs.getInt("member_num"));
+                board.setTitle(rs.getString("title"));
+                board.setContent(rs.getString("content"));
+                board.setRead_count(rs.getInt("read_count"));
+                board.setDate(rs.getString("date"));
+
+                boardList.add(board);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return boardList;
+    }
+*/
+
+    //모집 게시판 페이지네이션
+public List<BoardTeamVO> selectPagingTeamBoard(int offset, int pageSize) {
+
+        String sql = "";
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<BoardTeamVO> boardList = new ArrayList<>();
+
+        try {
+            conn = DBManager.getConnection();
+
+            sql = "SELECT * FROM user_info u inner join team_board t on u.user_id = t.user_id ORDER BY post_id DESC limit ?, ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, offset);
+            pstmt.setInt(2, pageSize);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                BoardTeamVO board = new BoardTeamVO();
+                board.setPost_id(rs.getInt("post_id"));
+                board.setUser_id(rs.getString("user_id"));
+                board.setNickname(rs.getString("nickname"));
+                board.setLocation(rs.getString("location"));
+                board.setMember_num(rs.getInt("member_num"));
+                board.setTitle(rs.getString("title"));
+                board.setContent(rs.getString("content"));
+                board.setRead_count(rs.getInt("read_count"));
+                board.setDate(rs.getString("date"));
+
+                boardList.add(board);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return boardList;
+    }
+
+    // 전체 게시글 수
+    public int selectAllTeamBoardCount() {
+        String sql = "";
+
+        int boardCnt = 0;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBManager.getConnection();
+
+
+            // 전체 리스트 조회
+            sql = "SELECT COUNT(*) FROM team_board";
+            pstmt = conn.prepareStatement(sql);
+
+
+            rs = pstmt.executeQuery();
+
+            if(rs.next()) {
+                boardCnt=rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+        return boardCnt;
+    }
+
 
     public BoardVO viewFreeBoard(String id) {
         BoardTeamVO board = new BoardTeamVO();
@@ -427,5 +663,54 @@ public class BoardDAO {
 
         return list;
     }
+
+
+    public void updateFreeBoard(BoardVO board, String userID) {
+        String sql = "update free_board set title = ?, content = ? where post_id = ? and user_id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, board.getTitle());
+            ps.setString(2, board.getContent());
+            ps.setInt(3, board.getPost_id());
+            ps.setString(4, userID);
+
+            int rs = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, ps);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
