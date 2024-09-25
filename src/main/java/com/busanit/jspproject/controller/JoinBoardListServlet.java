@@ -2,7 +2,6 @@ package com.busanit.jspproject.controller;
 
 import com.busanit.jspproject.dao.BoardDAO;
 import com.busanit.jspproject.dto.BoardTeamVO;
-import com.busanit.jspproject.dto.BoardVO;
 import util.PageHandler;
 
 import javax.servlet.*;
@@ -26,10 +25,7 @@ public class JoinBoardListServlet extends HttpServlet {
             currPage = Integer.parseInt(req_page);
         }
 
-
-
         BoardDAO dao = new BoardDAO();
-
 
         int totalCnt = dao.selectAllTeamBoardCount();
 
@@ -40,9 +36,8 @@ public class JoinBoardListServlet extends HttpServlet {
         int offset = (currPage - 1) * pageHandler.getPageSize();
 
 
-        //List<BoardTeamVO> boardList = dao.getJoinList();
-        List<BoardTeamVO> boardList = dao.selectPagingTeamBoard(offset, pageHandler.getPageSize());
-        request.setAttribute("boardList", boardList);
+        List<BoardTeamVO> teamBoardList = dao.selectPagingTeamBoard(offset, pageHandler.getPageSize());
+        request.setAttribute("boardList", teamBoardList);
         request.setAttribute("pageHandler", pageHandler);
         request.getRequestDispatcher(url).forward(request, response);
     }
