@@ -286,7 +286,7 @@ public class BoardDAO {
     }
 
     public void updateTeam(BoardVO board, String userID) {
-        String sql = "update team_board set title = ?, location = ? , member_num = ? , date = ?, content = ? where post_id = ? and user_id = ?";
+        String sql = "update team_board set title = ?, location = ? , member_num = ? , content = ? where post_id = ? and user_id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -296,10 +296,9 @@ public class BoardDAO {
             ps.setString(1, board.getTitle());
             ps.setString(2, board.getLocation());
             ps.setInt(3, board.getMember_num());
-            ps.setString(4, board.getDate());
-            ps.setString(5, board.getContent());
-            ps.setInt(6, board.getPost_id());
-            ps.setString(7, userID);
+            ps.setString(4, board.getContent());
+            ps.setInt(5, board.getPost_id());
+            ps.setString(6, userID);
 
             int rs = ps.executeUpdate();
         } catch (Exception e) {
@@ -329,11 +328,11 @@ public class BoardDAO {
     }
 
     public BoardVO viewFreeBoard(String id) {
-        BoardVO board = new BoardVO();
+        BoardTeamVO board = new BoardTeamVO();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from free_board where post_id=?";
+        String sql = "select f.post_id, f.title, f.date, f.user_id, f.board_type, u.nickname, f.content, f.read_count from user_info u inner join free_board f on u.user_id = f.user_id where post_id = ?";
 
         try {
             conn = DBManager.getConnection();
@@ -347,8 +346,7 @@ public class BoardDAO {
                 board.setContent(rs.getString("content"));
                 board.setUser_id(rs.getString("user_id"));
                 board.setRead_count(rs.getInt("read_count"));
-
-
+                board.setNickname(rs.getString("nickname"));
             }
 
         } catch ( Exception e ) {
@@ -404,7 +402,7 @@ public class BoardDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select f.post_id, f.title, f.date, f.user_id, f.board_type, u.nickname, from user_info u inner join free_board f on u.user_id = f.user_id order by f.post_id desc";
+        String sql = "select f.post_id, f.title, f.date, f.user_id, f.board_type, u.nickname from user_info u inner join free_board f on u.user_id = f.user_id order by f.post_id desc";
 
         try {
             conn = DBManager.getConnection();

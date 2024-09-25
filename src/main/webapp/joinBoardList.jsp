@@ -33,10 +33,12 @@
   <div class="p-5">
     <table class="table table-hover">
       <thead>
+      <tr>
         <th scope="col">#</th>
         <th colspan="2" scope="col">제목</th>
         <th scope="col">작성자</th>
         <th scope="col">작성일</th>
+      </tr>
       </thead>
 
       <tbody>
@@ -63,7 +65,21 @@
 
     </table>
 
-    <button type="button" class="btn btn-primary mx-auto" onclick="location.href='/team/write'">글쓰기</button>
+    <div class="row m-4">
+      <div class="d-flex justify-content-center">
+        <nav id="pagination" aria-label="Page navigation" class="col-auto ms-auto">
+          <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </nav>
+        <div class="col-auto ms-auto">
+          <a class="btn btn-primary " role="button" id="write-article" href="/team/write">글쓰기</a>
+        </div>
+
+      </div>
+    </div>
   </div>
 
 
