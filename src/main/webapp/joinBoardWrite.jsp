@@ -36,7 +36,7 @@
 
     <c:if test="${sessionScope.user != null}">
     <div id="wrap" align="center">
-      <form action="/team/write" method="post">
+      <form action="/team/write" method="post" enctype="multipart/form-data">
         <div class="input-group input-group-lg mb-4">
           <input type="text" class="form-control rounded-2" placeholder="제목" aria-label="title" name="title" required>
           <span class="input-group-text bg-transparent border-0">*필수</span>
@@ -64,9 +64,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <span class="input-group-text">이미지</span>
           <input type="file" class="form-control" name="img">
-          <input type="submit" class="btn btn-outline-secondary" value="업로드">
         </div>
         <textarea class="form-control" rows="15" name="content" placeholder="내용"></textarea>
 

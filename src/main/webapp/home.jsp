@@ -133,8 +133,8 @@
 
                 <div class="col">
                     <div class="container">
-                        <div class="p-5">
-                            <div class="d-flex justify-content-between">
+                        <div class="px-5 mb-5">
+                            <div class="d-flex justify-content-between  border-bottom mb-3 p-3">
                                 <span class="fs-4 fw-bold">자유 게시판</span>
                                 <button type="button" class="btn btn-light" onclick="location.href='/freeboard'">더보기</button>
                             </div>
@@ -143,8 +143,8 @@
                                 <thead>
                                 <tr>
                                     <th scope="col" class="list-group-numbered"><a>#</a></th>
-                                    <th colspan="2" scope="col" class="title col-6"><a>제목</a></th>
-                                    <th scope="col" class="user-id"><a>작성자</a></th>
+                                    <th scope="col" class="title col-6"><a>제목</a></th>
+                                    <th scope="col" class="user-id text-nowrap"><a>작성자</a></th>
                                     <th scope="col" class="created-at"><a>작성일</a></th>
                                 </tr>
                                 </thead>
@@ -153,14 +153,14 @@
                                 <c:forEach var="freeboard" items="${freeboardList}">
                                     <tr>
                                         <td>${freeboard.post_id}</td>
-                                        <td colspan="2">
+                                        <td class="col-6 ">
                                             <a href="/freeboard/view?id=${freeboard.post_id}" class="text-decoration-none">
-                                                <div class="fs-5 text-black mb-1">
+                                                <div class="fs-5 text-black mb-1 ">
                                                         ${freeboard.title}
                                                 </div>
                                             </a>
                                         </td>
-                                        <td>${freeboard.nickname}</td>
+                                        <td class="text-nowrap">${freeboard.nickname}</td>
                                         <td>${freeboard.date}</td>
                                     </tr>
                                 </c:forEach>
@@ -170,8 +170,8 @@
                     </div>
 
                     <div class="container">
-                        <div class="p-5">
-                            <div class="d-flex justify-content-between">
+                        <div class="px-5">
+                            <div class="d-flex justify-content-between  border-bottom mb-3 p-3">
                                 <span class="fs-4 fw-bold">모집 게시판</span>
                                 <button type="button" class="btn btn-light" onclick="location.href='/team'">더보기</button>
                             </div>
@@ -179,8 +179,8 @@
                                 <thead>
                                 <tr>
                                     <th scope="col" class="list-group-numbered">#</th>
-                                    <th colspan="2" scope="col" class="title col-6">제목</th>
-                                    <th scope="col" class="user-id" >작성자</th>
+                                    <th scope="col" class="title col-6">제목</th>
+                                    <th scope="col" class="user-id text-nowrap">작성자</th>
                                     <th scope="col" class="created-at">작성일</th>
                                 </tr>
                                 </thead>
@@ -188,7 +188,7 @@
                                 <c:forEach var="joinboard" items="${joinList}">
                                     <tr>
                                         <td>${joinboard.post_id}</td>
-                                        <td colspan="2">
+                                        <td class="col-6">
                                             <a href="/team/view?id=${joinboard.post_id}" class="text-decoration-none">
                                                 <div class="fs-5 text-black mb-1">
                                                         ${joinboard.title}
@@ -200,7 +200,7 @@
                                                 </div>
                                             </a>
                                         </td>
-                                        <td>${joinboard.nickname}</td>
+                                        <td class="text-nowrap">${joinboard.nickname}</td>
                                         <td>${joinboard.date}</td>
                                     </tr>
                                 </c:forEach>

@@ -230,7 +230,7 @@ public class BoardDAO {
 
 
     public void insertTeam(BoardVO board, String userID) {
-        String sql = "INSERT INTO team_board (title, location, member_num, content, user_id, board_type) values (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO team_board (title, location, member_num, content, user_id, board_type, img_url) values (?, ?, ?, ?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -242,6 +242,7 @@ public class BoardDAO {
             ps.setString(4, board.getContent());
             ps.setString(5, userID);
             ps.setString(6, board.getBoard_type());
+            ps.setString(7, board.getImg_url());
 
             int rs = ps.executeUpdate();
         } catch (Exception e) {
@@ -256,7 +257,7 @@ public class BoardDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select t.post_id, t.title, t.date, t.user_id, t.board_type, u.nickname, t.member_num, t.location, t.content, t.read_count from user_info u inner join team_board t on u.user_id = t.user_id where post_id = ?";
+        String sql = "select t.post_id, t.title, t.date, t.user_id, t.board_type, u.nickname, t.member_num, t.location, t.content, t.read_count, t.img_url from user_info u inner join team_board t on u.user_id = t.user_id where post_id = ?";
 
 
         try {
@@ -275,6 +276,7 @@ public class BoardDAO {
                 board.setUser_id(rs.getString("user_id"));
                 board.setNickname(rs.getString("nickname"));
                 board.setBoard_type(rs.getString("board_type"));
+                board.setImg_url(rs.getString("img_url"));
 
             }
 
@@ -333,7 +335,7 @@ public class BoardDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select f.post_id, f.title, f.date, f.user_id, f.board_type, u.nickname, f.content, f.read_count from user_info u inner join free_board f on u.user_id = f.user_id where post_id = ?";
+        String sql = "select f.post_id, f.title, f.date, f.user_id, f.board_type, u.nickname, f.content, f.read_count, f.img_url from user_info u inner join free_board f on u.user_id = f.user_id where post_id = ?";
 
         try {
             conn = DBManager.getConnection();
@@ -349,6 +351,7 @@ public class BoardDAO {
                 board.setRead_count(rs.getInt("read_count"));
                 board.setNickname(rs.getString("nickname"));
                 board.setBoard_type(rs.getString("board_type"));
+                board.setImg_url(rs.getString("img_url"));
             }
 
         } catch (Exception e) {
@@ -379,7 +382,7 @@ public class BoardDAO {
     }
 
     public void insertFreeBoard(BoardVO board, String userID) {
-        String sql = "INSERT INTO Free_board (title, content, user_id, board_type) values (?, ?, ?, ?)";
+        String sql = "INSERT INTO Free_board (title, content, user_id, board_type, img_url) values (?, ?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -389,6 +392,7 @@ public class BoardDAO {
             ps.setString(2, board.getContent());
             ps.setString(3, userID);
             ps.setString(4, board.getBoard_type());
+            ps.setString(5, board.getImg_url());
 
             int rs = ps.executeUpdate();
         } catch (Exception e) {

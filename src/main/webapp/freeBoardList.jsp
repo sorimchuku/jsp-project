@@ -30,7 +30,7 @@
       <thead>
       <tr>
         <th scope="col" class="list-group-numbered"><a>#</a></th>
-        <th colspan="2" scope="col" class="title col-6"><a>제목</a></th>
+        <th  scope="col" class="title col-6"><a>제목</a></th>
         <th scope="col" class="user-id"><a>작성자</a></th>
         <th scope="col" class="created-at"><a>작성일</a></th>
       </tr>
@@ -40,7 +40,7 @@
       <c:forEach var="board" items="${boardList}">
         <tr>
           <td>${board.post_id}</td>
-          <td colspan="2">
+          <td>
             <a href="/freeboard/view?id=${board.post_id}" class="text-decoration-none">
               <div class="fs-5 text-black mb-1">
                   ${board.title}
