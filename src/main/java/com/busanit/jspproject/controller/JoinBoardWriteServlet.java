@@ -40,8 +40,10 @@ public class JoinBoardWriteServlet extends HttpServlet {
         String fileName = "";
         for (Part part : request.getParts()) {
             if (part.getName().equals("img")) {
-                fileName = extractFileName(part);
-                part.write(uploadFilePath + File.separator + fileName);
+                if(part.getSize() > 0) {
+                    fileName = extractFileName(part);
+                    part.write(uploadFilePath + File.separator + fileName);
+                }
             }
         }
 

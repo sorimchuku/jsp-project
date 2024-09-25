@@ -80,11 +80,10 @@
         </div>
       </div>
 
-      <c:if test="${board.img_url != null}">
+      <c:if test="${board.img_url != ''}">
         <div class="card">
           <img class="card-img" src="${pageContext.request.contextPath}/image?filename=${board.img_url}" alt="Test Image">
         </div>
-
       </c:if>
 
       <div class="h-25 w-100 p-4 border-bottom">${board.content}</div>

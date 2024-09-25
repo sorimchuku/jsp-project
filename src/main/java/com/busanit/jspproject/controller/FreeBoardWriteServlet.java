@@ -27,7 +27,7 @@ public class FreeBoardWriteServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
-        String uploadFilePath = "C:\\\\uploads";
+        String uploadFilePath = "C:\\uploads";
 
         File uploadDir = new File(uploadFilePath);
         if (!uploadDir.exists()) {
@@ -37,8 +37,10 @@ public class FreeBoardWriteServlet extends HttpServlet {
         String fileName = "";
         for (Part part : request.getParts()) {
             if (part.getName().equals("img")) {
-                fileName = extractFileName(part);
-                part.write(uploadFilePath + File.separator + fileName);
+                if(part.getSize() > 0) {
+                    fileName = extractFileName(part);
+                    part.write(uploadFilePath + File.separator + fileName);
+                }
             }
         }
 

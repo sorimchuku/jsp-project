@@ -66,7 +66,7 @@
         </div>
 
       </div>
-      <c:if test="${board.img_url != null}">
+      <c:if test="${board.img_url != ''}">
         <div class="card">
           <img class="card-img" src="${pageContext.request.contextPath}/image?filename=${board.img_url}" alt="Test Image">
         </div>
