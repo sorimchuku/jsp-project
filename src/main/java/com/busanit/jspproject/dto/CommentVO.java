@@ -2,8 +2,9 @@ package com.busanit.jspproject.dto;
 
 public class CommentVO {
     private int comment_id;
-    private int user_id;
+    private String user_id;
     private int post_id;
+    private String nickname;
     private String date;
     private String content;
     private String board_type;
@@ -16,11 +17,11 @@ public class CommentVO {
         this.comment_id = comment_id;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
@@ -54,5 +55,12 @@ public class CommentVO {
 
     public void setBoard_type(String board_type) {
         this.board_type = board_type;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

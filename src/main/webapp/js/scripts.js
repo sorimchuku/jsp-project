@@ -136,3 +136,11 @@ function getRunningTime(start_time, end_time) {
 
     return timestr;
 }
+
+function deleteComment(postID, commentID, type) {
+    if (confirm("댓글을 삭제하시겠습니까?")) {
+        location.href="/comment/delete?boardType=" + type + "&post=" + postID + "&id=" + commentID;
+    } else {
+        return false;
+    }
+}

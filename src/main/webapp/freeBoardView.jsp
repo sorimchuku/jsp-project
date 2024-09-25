@@ -13,21 +13,21 @@
 <head>
   <title>freeboard</title>
   <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
   <!-- Bootstrap icons-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
   <!-- Core theme CSS (includes Bootstrap)-->
-  <link href="/css/styles.css" rel="stylesheet" />
+  <link href="/css/styles.css" rel="stylesheet"/>
   <script>
-    function openModal(mode) {
-      document.querySelector("#hidden_modal_mode").value = mode;
-      const myModal = new bootstrap.Modal('#staticBackdrop');
-      myModal.show();
-    }
+      function openModal(mode) {
+          document.querySelector("#hidden_modal_mode").value = mode;
+          const myModal = new bootstrap.Modal('#staticBackdrop');
+          myModal.show();
+      }
   </script>
 </head>
 <body>
-<%@include file="layout/header.jsp"%>
+<%@include file="layout/header.jsp" %>
 <!-- Header-->
 <header class="bg-dark py-4">
   <div class="container px-5">
@@ -44,8 +44,9 @@
       <span class="h4 fw-bold">자유 게시판 상세페이지</span>
       <div class="d-flex justify-content-center gap-3 my-4">
         <div class="btn-group">
-          <button class="btn btn-outline-primary" onclick="location.href='/freeboard/write'">글쓰기</button>
-          <button class="btn btn-outline-secondary" onclick="location.href='/freeboard/edit?id=${board.post_id}'">수정</button>
+          <button class="btn btn-outline-secondary" onclick="location.href='/freeboard/edit?id=${board.post_id}'">수정
+          </button>
+
           <button class="btn btn-outline-danger" onclick="openModal('delete')">삭제</button>
         </div>
       </div>
@@ -54,17 +55,30 @@
     <c:if test="${board != null}">
       <div class="d-flex justify-content-between mb-4 px-4">
         <h4 class="">${board.title}</h4>
-        <span>${board.date}</span>
-      </div>
-      <div class="border rounded-2 p-5 mb-4">
-      <div class="h-25 w-100 p-4 border-bottom">${board.content}</div>
-      <div class="d-flex justify-content-center m-4">
-
-        <div class="btn-group" role="group" aria-label="Basic outlined example">
-          <button type="button" class="btn btn-outline-primary">이전글</button>
-          <button type="button" class="btn btn-primary" onclick="location.href='/freeboard'">목록</button>
-          <button type="button" class="btn btn-outline-primary">다음글</button>
+        <div>
+          <span>${board.nickname}</span>
+          <span> · </span>
+          <span>${board.date}</span>
         </div>
+
+      </div>
+      <c:if test="${board.img_url != null}">
+        <div class="card">
+          <img class="card-img" src="${pageContext.request.contextPath}/image?filename=${board.img_url}" alt="Test Image">
+        </div>
+      </c:if>
+      <div class="h-25 w-100 p-4 border-bottom">${board.content}</div>
+
+      <%@include file="comment.jsp"%>
+
+      <div class="row m-4">
+        <div class="d-flex justify-content-center">
+          <div class="btn-group col-auto ms-auto" role="group" aria-label="Basic outlined example">
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='/freeboard'">목록</button>
+          </div>
+          <button class="btn btn-primary col-auto ms-auto" onclick="location.href='/freeboard/write'">글쓰기</button>
+        </div>
+
       </div>
     </c:if>
 
@@ -152,7 +166,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-6" id="staticBackdropLabel">개인 기록 삭제</h1>
+
+        <h1 class="modal-title fs-6" id="staticBackdropLabel">게시글 삭제</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body p-4">
@@ -167,6 +182,7 @@
     </div>
   </div>
 </div>
+
 <%@include file="layout/footer.jsp"%>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
