@@ -24,9 +24,6 @@
           const myModal = new bootstrap.Modal('#staticBackdrop');
           myModal.show();
       }
-
-
-
   </script>
 </head>
 <body>
@@ -44,11 +41,12 @@
 <main>
   <div class="container px-5 my-5">
     <div class="border-bottom px-4 mb-4 d-flex justify-content-between align-items-center">
-      <span class="h4 fw-bold">상세페이지</span>
+      <span class="h4 fw-bold">자유 게시판 상세페이지</span>
       <div class="d-flex justify-content-center gap-3 my-4">
         <div class="btn-group">
           <button class="btn btn-outline-secondary" onclick="location.href='/freeboard/edit?id=${board.post_id}'">수정
           </button>
+
           <button class="btn btn-outline-danger" onclick="openModal('delete')">삭제</button>
         </div>
       </div>
@@ -84,6 +82,82 @@
       </div>
     </c:if>
 
+
+<%-- 댓글 --%>
+        <div class="row 9-5">
+          <sectoin>
+            <form class="row g-3">
+
+              <div class="col-md-9 col-lg-8">
+                <label for="articleComment" hidden>댓글</label>
+                <textarea class="form-control" id="articleComment" placeholder="댓글 쓰기.." rows="3"
+                          required></textarea>
+              </div>
+              <div class="col-md-3 col-lg-4">
+                <label for="comment-submit" hidden>댓글 쓰기</label>
+                <button class="btn btn-primary" id="comment-submit" type="submit">쓰기</button>
+              </div>
+
+            </form>
+
+            <ul id="article-comments" class="row col-md-10 col-lg-8 pt-3">
+              <li>
+                <form>
+                  <input hidden class="article-id">
+                  <div class="row">
+                    <div class="row col-md-10 col-lg-9">
+                      <strong>Jyc</strong>
+                      <small>
+                        <time>2022-01-01</time>
+                      </small>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
+                        Lorem ipsum dolor sit amet
+                      </p>
+                    </div>
+                  </div>
+                </form>
+              </li>
+              <li>
+                <form>
+                  <input hidden class="article-id">
+                  <div class="row">
+                    <div class="row col-md-10 col-lg-9">
+                      <strong>Jyc</strong>
+                      <small>
+                        <time>2022-01-01</time>
+                      </small>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
+                        Lorem ipsum dolor sit amet
+                      </p>
+                    </div>
+                  </div>
+                </form>
+              </li>
+            </ul>
+
+          </sectoin>
+        </div>
+        <div class="row g-5">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">이전글</span>
+                </a>
+              </li>
+
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo; </span>
+                  <span class="sr-only">다음글</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
   </div>
 </main>
 
@@ -92,6 +166,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
+
         <h1 class="modal-title fs-6" id="staticBackdropLabel">게시글 삭제</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -108,8 +183,7 @@
   </div>
 </div>
 
-
-<%@include file="layout/footer.jsp" %>
+<%@include file="layout/footer.jsp"%>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->

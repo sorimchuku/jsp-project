@@ -10,7 +10,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-  <title>Blog</title>
+
+    <title>모집게시판</title>
+
 </head>
 <body>
 <%@include file="layout/header.jsp" %>

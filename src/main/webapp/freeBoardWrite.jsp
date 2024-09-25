@@ -32,6 +32,7 @@
         </div>
         </c:if>
 
+
         <c:if test="${sessionScope.user != null}">
             <div id="wrap" align="center">
                 <form action="/freeboard/write" method="post" enctype="multipart/form-data">
@@ -52,6 +53,7 @@
             </div>
         </c:if>
     </div>
+
 </main>
 <%@include file="layout/footer.jsp"%>
 </body>
