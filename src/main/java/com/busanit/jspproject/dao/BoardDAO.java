@@ -2,6 +2,7 @@ package com.busanit.jspproject.dao;
 
 import com.busanit.jspproject.dto.BoardTeamVO;
 import com.busanit.jspproject.dto.BoardVO;
+import com.busanit.jspproject.dto.CommentVO;
 import com.busanit.jspproject.dto.UserVO;
 import util.DBManager;
 
@@ -167,7 +168,7 @@ public class BoardDAO {
 
             }
 
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBManager.close(conn, ps, rs);
@@ -186,7 +187,7 @@ public class BoardDAO {
             ps.setString(1, postID);
             ps.setString(2, user.getUserID());
             int rs = ps.executeUpdate();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBManager.close(conn, ps);
@@ -226,7 +227,6 @@ public class BoardDAO {
 
         return list;
     }
-
 
 
     public void insertTeam(BoardVO board, String userID) {
@@ -274,10 +274,11 @@ public class BoardDAO {
                 board.setRead_count(rs.getInt("read_count"));
                 board.setUser_id(rs.getString("user_id"));
                 board.setNickname(rs.getString("nickname"));
+                board.setBoard_type(rs.getString("board_type"));
 
             }
 
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBManager.close(conn, ps, rs);
@@ -347,9 +348,10 @@ public class BoardDAO {
                 board.setUser_id(rs.getString("user_id"));
                 board.setRead_count(rs.getInt("read_count"));
                 board.setNickname(rs.getString("nickname"));
+                board.setBoard_type(rs.getString("board_type"));
             }
 
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBManager.close(conn, ps, rs);
@@ -428,4 +430,77 @@ public class BoardDAO {
         return list;
     }
 
+    public void insertComment(CommentVO comment) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "insert into comment (content, board_type, user_id, post_id) values (?, ?, ?, ?)";
+
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, comment.getContent());
+            ps.setString(2, comment.getBoard_type());
+            ps.setString(3, comment.getUser_id());
+            ps.setInt(4, comment.getPost_id());
+            int rs = ps.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBManager.close(conn, ps);
+        }
+    }
+
+    public List<CommentVO> getCommentList(int postID, String boardType) {
+        List<CommentVO> commentList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select c.post_id, c.comment_id, c.content, c.board_type, c.user_id, c.date, u.nickname from comment c inner join user_info u on c.user_id = u.user_id where c.post_id = ? and c.board_type = ?";
+
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, postID);
+            ps.setString(2, boardType);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                CommentVO comment = new CommentVO();
+                comment.setPost_id(rs.getInt("post_id"));
+                comment.setComment_id(rs.getInt("comment_id"));
+                comment.setDate(rs.getString("date"));
+                comment.setContent(rs.getString("content"));
+                comment.setBoard_type(rs.getString("board_type"));
+                comment.setUser_id(rs.getString("user_id"));
+                comment.setNickname(rs.getString("nickname"));
+                comment.setBoard_type(boardType);
+                commentList.add(comment);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBManager.close(conn, ps, rs);
+        }
+
+        return commentList;
+    }
+
+    public void deleteComment(int postID, int commentID, String boardType) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "delete from comment where post_id = ? and comment_id = ? and board_type = ?";
+
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, postID);
+            ps.setInt(2, commentID);
+            ps.setString(3, boardType);
+            int rs = ps.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBManager.close(conn, ps);
+        }
+    }
 }
