@@ -11,7 +11,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-  <title>team</title>
+  <title>모집 게시판</title>
   <!-- Favicon-->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <!-- Bootstrap icons-->
@@ -44,13 +44,12 @@
       <span class="h4 fw-bold">모집 게시판 상세페이지</span>
       <div class="d-flex justify-content-center gap-3 my-4">
         <div class="btn-group">
-          <button class="btn btn-outline-primary" onclick="location.href='/team/write'">글쓰기</button>
           <button class="btn btn-outline-secondary" onclick="location.href='/team/edit?id=${board.post_id}'">수정</button>
           <button class="btn btn-outline-danger" onclick="openModal('delete')">삭제</button>
         </div>
+
       </div>
     </div>
-
     <c:if test="${board != null}">
       <div class="d-flex justify-content-between mb-4 px-4">
         <h4 class="">${board.title}</h4>

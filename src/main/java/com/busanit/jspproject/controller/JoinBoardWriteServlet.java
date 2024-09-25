@@ -18,8 +18,6 @@ import static java.lang.Integer.parseInt;
 @WebServlet("/team/write")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 50)
 public class JoinBoardWriteServlet extends HttpServlet {
-    private static final String UPLOAD_DIR = "uploads";
-    private static final String LOCAL_PROJECT_PATH = "C:\\eom\\jsp-project\\jsp-project\\src";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "/joinBoardWrite.jsp";
@@ -33,8 +31,7 @@ public class JoinBoardWriteServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
-        String uploadFilePath = LOCAL_PROJECT_PATH + File.separator + UPLOAD_DIR;
-
+        String uploadFilePath = "C:\\uploads";
         File uploadDir = new File(uploadFilePath);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
@@ -50,6 +47,7 @@ public class JoinBoardWriteServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         UserVO user = (UserVO) session.getAttribute("user");
+
         BoardVO board = new BoardVO();
         board.setTitle(request.getParameter("title"));
         board.setContent(request.getParameter("content"));

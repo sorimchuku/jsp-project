@@ -9,7 +9,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>자유게시판</title>
+    <title>자유게시판 - 수정</title>
 </head>
 <body>
 <%@include file="layout/header.jsp"%>
@@ -23,7 +23,7 @@
         </c:if>
 
         <div id="wrap" align="center">
-            <h1>자유게시판 게시판 수정</h1>
+            <h1>모집 게시판 수정</h1>
             <form action="/freeboard/edit" method="post">
                 <input type="hidden" value="${board.post_id}" name="id">
                 <table>
@@ -43,7 +43,7 @@
                 <br><br>
                 <input type="submit" value="등록">
                 <input type="reset" value="다시 작성">
-                <input type="button" value="목록" onclick="location.href='/freeboard'">
+                <input type="button" value="목록" onclick="location.href='/board/list'">
             </form>
         </div>
 </main>

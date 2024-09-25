@@ -9,7 +9,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>Blog</title>
+    <title>자유게시판 -  글쓰기</title>
 </head>
 <body>
 <%@include file="layout/header.jsp"%>
@@ -32,7 +32,6 @@
         </div>
         </c:if>
 
-
         <c:if test="${sessionScope.user != null}">
             <div id="wrap" align="center">
                 <form action="/freeboard/write" method="post" enctype="multipart/form-data">
@@ -53,7 +52,6 @@
             </div>
         </c:if>
     </div>
-
 </main>
 <%@include file="layout/footer.jsp"%>
 </body>
