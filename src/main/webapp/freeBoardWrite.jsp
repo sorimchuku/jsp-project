@@ -13,6 +13,16 @@
 </head>
 <body>
 <%@include file="layout/header.jsp"%>
+<!-- Header-->
+<header class="bg-dark py-4">
+    <div class="container px-5">
+        <div class=" align-items-center justify-content-start">
+            <div class="text-xl-start">
+                <h1 class="display-8 fw-bolder text-white mb-2">자유 게시판 글쓰기</h1>
+            </div>
+        </div>
+    </div>
+</header>
 <main class="container">
     <div class="row p-5">
         <c:if test="${sessionScope.user == null}">
@@ -22,31 +32,28 @@
         </div>
         </c:if>
 
-        <div id="wrap" align="center">
-            <h1>자유 게시판 글쓰기</h1>
-            <form action="/freeboard/write" method="post" >
-                <table>
-                    <tr>
-                        <th>제목</th>
-                        <td><input type="text" size="70" name="title"> * 필수</td>
-                    </tr>
-                    <tr>
-                        <th>내용</th>
-                        <td><textarea cols="70" rows="15" name="content"></textarea></td>
-                    </tr>
-                    <tr>
-                        <th>이미지</th>
-                        <td><input type="file" name="img"><input type="submit" value="upload"></td>
-                    </tr>
-                </table>
-                <br><br>
-                <input type="submit" value="등록">
-                <input type="reset" value="다시 작성">
-                <input type="button" value="목록" onclick="location.href='/freeboard'">
-            </form>
-        </div>
-        
-
+        <c:if test="${sessionScope.user != null}">
+            <div id="wrap" align="center">
+                <form action="/freeboard/write" method="post" >
+                    <div class="input-group input-group-lg mb-4">
+                        <input type="text" class="form-control rounded-2" placeholder="제목" aria-label="title" name="title" required>
+                        <span class="input-group-text bg-transparent border-0">*필수</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">이미지</span>
+                        <input type="file" class="form-control" name="img">
+                        <input type="submit" class="btn btn-outline-secondary" value="업로드">
+                    </div>
+                    <textarea class="form-control" rows="15" name="content" placeholder="내용"></textarea>
+                    <div class="d-flex justify-content-center gap-3 my-4">
+                        <button type="submit" class="btn btn-primary px-3">등록</button>
+                        <input type="reset" class="btn btn-secondary px-3" value="다시 작성">
+                        <input type="button" value="목록" class="btn btn-secondary px-3" onclick="location.href='/freeboard'">
+                    </div>
+                </form>
+            </div>
+        </c:if>
+    </div>
 </main>
 <%@include file="layout/footer.jsp"%>
 </body>

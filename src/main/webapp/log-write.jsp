@@ -79,8 +79,10 @@
       </div>
       <textarea class="form-control h-25" name="content" placeholder="메모"></textarea>
       <div class="d-flex justify-content-center gap-3 my-4">
-        <button class="btn btn-light px-3 btn-lg">임시저장</button>
-        <button type="submit" class="btn btn-primary px-3 btn-lg" onclick="return checkLogWrite()">완료</button>
+
+        <button type="submit" class="btn btn-primary px-3 btn" onclick="return checkLogWrite()">등록</button>
+        <input type="reset" class="btn btn-secondary px-3" value="다시 작성">
+        <button class="btn btn-secondary px-3 btn" onclick="location.href='/blog'">목록</button>
       </div>
     </form>
   </div>

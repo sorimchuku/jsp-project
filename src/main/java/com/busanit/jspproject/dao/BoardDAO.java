@@ -286,7 +286,7 @@ public class BoardDAO {
     }
 
     public void updateTeam(BoardVO board, String userID) {
-        String sql = "update team_board set title = ?, location = ? , member_num = ? , date = ?, content = ? where post_id = ? and user_id = ?";
+        String sql = "update team_board set title = ?, location = ? , member_num = ? , content = ? where post_id = ? and user_id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -296,10 +296,9 @@ public class BoardDAO {
             ps.setString(1, board.getTitle());
             ps.setString(2, board.getLocation());
             ps.setInt(3, board.getMember_num());
-            ps.setString(4, board.getDate());
-            ps.setString(5, board.getContent());
-            ps.setInt(6, board.getPost_id());
-            ps.setString(7, userID);
+            ps.setString(4, board.getContent());
+            ps.setInt(5, board.getPost_id());
+            ps.setString(6, userID);
 
             int rs = ps.executeUpdate();
         } catch (Exception e) {
@@ -329,7 +328,7 @@ public class BoardDAO {
     }
 
     public BoardVO viewFreeBoard(String id) {
-        BoardVO board = new BoardVO();
+        BoardTeamVO board = new BoardTeamVO();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -347,8 +346,7 @@ public class BoardDAO {
                 board.setContent(rs.getString("content"));
                 board.setUser_id(rs.getString("user_id"));
                 board.setRead_count(rs.getInt("read_count"));
-
-
+                board.setNickname(rs.getString("nickname"));
             }
 
         } catch ( Exception e ) {

@@ -85,9 +85,7 @@
       <div class="row m-4">
         <div class="d-flex justify-content-center">
           <div class="btn-group col-auto ms-auto" role="group" aria-label="Basic outlined example">
-            <button type="button" class="btn btn-outline-primary">이전글</button>
-            <button type="button" class="btn btn-primary" onclick="location.href='/team'">목록</button>
-            <button type="button" class="btn btn-outline-primary">다음글</button>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='/team'">목록</button>
           </div>
           <button class="btn btn-primary col-auto ms-auto" onclick="location.href='/team/write'">글쓰기</button>
         </div>

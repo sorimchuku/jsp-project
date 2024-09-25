@@ -25,7 +25,7 @@
   </div>
 </header>
 
-<main>
+<main class="container">
   <div class="row p-5 text-center">
     <c:if test="${sessionScope.user == null}">
     <div class="border rounded-3 w-75 p-4 py-5 mx-auto d-flex flex-column justify-content-center align-items-center">
@@ -37,31 +37,44 @@
     <c:if test="${sessionScope.user != null}">
     <div id="wrap" align="center">
       <form action="/team/write" method="post">
-        <table>
-          <tr>
-            <th>제목</th>
-            <td><input type="text" size="70" name="title"> * 필수</td>
-          </tr>
-          <tr>
-            <th>지역</th>
-            <td><input type="text" size="35" name="location"></td>
-          </tr>
-          <tr>
-            <th>인원수</th>
-            <td><input type="text" size="35" name="member_num"></td>
-          </tr>
-          <tr>
-            <th>이미지</th>
-            <td><input type="file" name="img"><input type="submit" value="upload"></td>
-          </tr>
-          <tr>
-            <th>내용</th>
-            <td><textarea cols="70" rows="15" name="content"></textarea></td>
-          </tr>
-        </table>
-        <br><br>
-        <input type="submit" value="등록">
-        <input type="reset" value="다시 작성">
+        <div class="input-group input-group-lg mb-4">
+          <input type="text" class="form-control rounded-2" placeholder="제목" aria-label="title" name="title" required>
+          <span class="input-group-text bg-transparent border-0">*필수</span>
+        </div>
+        <div class="row mb-3">
+          <div class="col-auto">
+            <div class="input-group ">
+              <span class="input-group-text">지역</span>
+              <select class="form-select" id="location" name="location">
+                <option selected value="">선택하세요</option>
+                <%
+                  String[] busanDistricts = {"강서구", "금정구", "기장군", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구"};
+                  for (String district : busanDistricts) {
+                    out.println("<option value=\"" + district + "\">" + district + "</option>");
+                  }
+                %>
+              </select>
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="input-group col">
+              <span class="input-group-text">인원수</span>
+              <input type="number" name="member_num" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text">이미지</span>
+          <input type="file" class="form-control" name="img">
+          <input type="submit" class="btn btn-outline-secondary" value="업로드">
+        </div>
+        <textarea class="form-control" rows="15" name="content" placeholder="내용"></textarea>
+
+        <div class="d-flex justify-content-center gap-3 my-4">
+          <button type="submit" class="btn btn-primary px-3">등록</button>
+          <input type="reset" class="btn btn-secondary px-3" value="다시 작성">
+          <a href="/team" role="button" class="btn btn-secondary px-3" >목록</a>
+        </div>
       </form>
     </div>
     </c:if>
