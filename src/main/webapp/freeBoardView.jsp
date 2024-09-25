@@ -13,15 +13,23 @@
 <head>
   <title>freeboard</title>
   <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
   <!-- Bootstrap icons-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
   <!-- Core theme CSS (includes Bootstrap)-->
-  <link href="/css/styles.css" rel="stylesheet" />
+
+  <link href="/css/styles.css" rel="stylesheet"/>
+  <script>
+      function openModal(mode) {
+          document.querySelector("#hidden_modal_mode").value = mode;
+          const myModal = new bootstrap.Modal('#staticBackdrop');
+          myModal.show();
+      }
+  </script>
 
 </head>
 <body>
-<%@include file="layout/header.jsp"%>
+<%@include file="layout/header.jsp" %>
 <!-- Header-->
 <header class="bg-dark py-4">
   <div class="container px-5">
@@ -35,10 +43,12 @@
 <main>
   <div class="container px-5 my-5">
     <div class="border-bottom px-4 mb-4 d-flex justify-content-between align-items-center">
-      <span class="h4 fw-bold">상세페이지</span>
+      <span class="h4 fw-bold">자유 게시판 상세페이지</span>
       <div class="d-flex justify-content-center gap-3 my-4">
         <div class="btn-group">
-          <button class="btn btn-outline-secondary" onclick="location.href='/freeboard/edit?id=${board.post_id}'">수정</button>
+          <button class="btn btn-outline-secondary" onclick="location.href='/freeboard/edit?id=${board.post_id}'">수정
+          </button>
+
           <button class="btn btn-outline-danger" onclick="openModal('delete')">삭제</button>
         </div>
       </div>
@@ -54,7 +64,15 @@
         </div>
 
       </div>
+      <c:if test="${board.img_url != null}">
+        <div class="card">
+          <img class="card-img" src="${pageContext.request.contextPath}/image?filename=${board.img_url}" alt="Test Image">
+        </div>
+      </c:if>
       <div class="h-25 w-100 p-4 border-bottom">${board.content}</div>
+
+      <%@include file="comment.jsp"%>
+
       <div class="row m-4">
         <div class="d-flex justify-content-center">
           <div class="btn-group col-auto ms-auto" role="group" aria-label="Basic outlined example">
@@ -144,6 +162,29 @@
         </div>
   </div>
 </main>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h1 class="modal-title fs-6" id="staticBackdropLabel">게시글 삭제</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <input type="hidden" id="hidden_modal_mode">
+        <h5>게시글을 삭제하시겠습니까?</h5>
+        <span id="modal_result"></span>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-danger" onclick="location.href='/freeboard/delete?id=${board.post_id}'">삭제</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <%@include file="layout/footer.jsp"%>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

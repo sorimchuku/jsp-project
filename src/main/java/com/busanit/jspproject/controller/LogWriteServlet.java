@@ -45,6 +45,7 @@ public class LogWriteServlet extends HttpServlet {
         boolean isPrivate = request.getParameter("is_private").equals("true");
         board.setIs_private(isPrivate);
         board.setBoard_type("log");
+        board.setImg_url(request.getParameter("img"));
 
         BoardDAO dao = new BoardDAO();
         dao.insertLog(board, user.getUserID());

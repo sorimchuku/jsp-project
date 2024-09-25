@@ -2,6 +2,7 @@ package com.busanit.jspproject.dao;
 
 import com.busanit.jspproject.dto.BoardTeamVO;
 import com.busanit.jspproject.dto.BoardVO;
+import com.busanit.jspproject.dto.CommentVO;
 import com.busanit.jspproject.dto.UserVO;
 import util.DBManager;
 
@@ -169,7 +170,7 @@ public class BoardDAO {
 
             }
 
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBManager.close(conn, ps, rs);
@@ -188,7 +189,7 @@ public class BoardDAO {
             ps.setString(1, postID);
             ps.setString(2, user.getUserID());
             int rs = ps.executeUpdate();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBManager.close(conn, ps);
@@ -298,9 +299,8 @@ public class BoardDAO {
     }
 
 
-
     public void insertTeam(BoardVO board, String userID) {
-        String sql = "INSERT INTO team_board (title, location, member_num, content, user_id, board_type) values (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO team_board (title, location, member_num, content, user_id, board_type, img_url) values (?, ?, ?, ?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -312,6 +312,7 @@ public class BoardDAO {
             ps.setString(4, board.getContent());
             ps.setString(5, userID);
             ps.setString(6, board.getBoard_type());
+            ps.setString(7, board.getImg_url());
 
             int rs = ps.executeUpdate();
         } catch (Exception e) {
@@ -326,7 +327,7 @@ public class BoardDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select t.post_id, t.title, t.date, t.user_id, t.board_type, u.nickname, t.member_num, t.location, t.content, t.read_count from user_info u inner join team_board t on u.user_id = t.user_id where post_id = ?";
+        String sql = "select t.post_id, t.title, t.date, t.user_id, t.board_type, u.nickname, t.member_num, t.location, t.content, t.read_count, t.img_url from user_info u inner join team_board t on u.user_id = t.user_id where post_id = ?";
 
 
         try {
@@ -344,10 +345,12 @@ public class BoardDAO {
                 board.setRead_count(rs.getInt("read_count"));
                 board.setUser_id(rs.getString("user_id"));
                 board.setNickname(rs.getString("nickname"));
+                board.setBoard_type(rs.getString("board_type"));
+                board.setImg_url(rs.getString("img_url"));
 
             }
 
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBManager.close(conn, ps, rs);
@@ -568,7 +571,8 @@ public List<BoardTeamVO> selectPagingTeamBoard(int offset, int pageSize) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select f.post_id, f.title, f.date, f.user_id, f.board_type, u.nickname, f.content, f.read_count from user_info u inner join free_board f on u.user_id = f.user_id where post_id = ?";
+      
+        String sql = "select f.post_id, f.title, f.date, f.user_id, f.board_type, u.nickname, f.content, f.read_count, f.img_url from user_info u inner join free_board f on u.user_id = f.user_id where post_id = ?";
 
         try {
             conn = DBManager.getConnection();
@@ -583,9 +587,11 @@ public List<BoardTeamVO> selectPagingTeamBoard(int offset, int pageSize) {
                 board.setUser_id(rs.getString("user_id"));
                 board.setRead_count(rs.getInt("read_count"));
                 board.setNickname(rs.getString("nickname"));
+                board.setBoard_type(rs.getString("board_type"));
+                board.setImg_url(rs.getString("img_url"));
             }
 
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DBManager.close(conn, ps, rs);
@@ -613,7 +619,7 @@ public List<BoardTeamVO> selectPagingTeamBoard(int offset, int pageSize) {
     }
 
     public void insertFreeBoard(BoardVO board, String userID) {
-        String sql = "INSERT INTO Free_board (title, content, user_id, board_type) values (?, ?, ?, ?)";
+        String sql = "INSERT INTO Free_board (title, content, user_id, board_type, img_url) values (?, ?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -623,6 +629,7 @@ public List<BoardTeamVO> selectPagingTeamBoard(int offset, int pageSize) {
             ps.setString(2, board.getContent());
             ps.setString(3, userID);
             ps.setString(4, board.getBoard_type());
+            ps.setString(5, board.getImg_url());
 
             int rs = ps.executeUpdate();
         } catch (Exception e) {
@@ -665,12 +672,103 @@ public List<BoardTeamVO> selectPagingTeamBoard(int offset, int pageSize) {
     }
 
 
+    public void insertComment(CommentVO comment) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "insert into comment (content, board_type, user_id, post_id) values (?, ?, ?, ?)";
+
+
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+
+            ps.setString(1, comment.getContent());
+            ps.setString(2, comment.getBoard_type());
+            ps.setString(3, comment.getUser_id());
+            ps.setInt(4, comment.getPost_id());
+            int rs = ps.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBManager.close(conn, ps);
+        }
+    }
+
+    public List<CommentVO> getCommentList(int postID, String boardType) {
+        List<CommentVO> commentList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select c.post_id, c.comment_id, c.content, c.board_type, c.user_id, c.date, u.nickname from comment c inner join user_info u on c.user_id = u.user_id where c.post_id = ? and c.board_type = ?";
+
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, postID);
+            ps.setString(2, boardType);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                CommentVO comment = new CommentVO();
+                comment.setPost_id(rs.getInt("post_id"));
+                comment.setComment_id(rs.getInt("comment_id"));
+                comment.setDate(rs.getString("date"));
+                comment.setContent(rs.getString("content"));
+                comment.setBoard_type(rs.getString("board_type"));
+                comment.setUser_id(rs.getString("user_id"));
+                comment.setNickname(rs.getString("nickname"));
+                comment.setBoard_type(boardType);
+                commentList.add(comment);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBManager.close(conn, ps, rs);
+        }
+
+        return commentList;
+    }
+
+    public void deleteComment(int postID, int commentID, String boardType) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "delete from comment where post_id = ? and comment_id = ? and board_type = ?";
+
+        try {
+            conn = DBManager.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, postID);
+            ps.setInt(2, commentID);
+            ps.setString(3, boardType);
+            int rs = ps.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBManager.close(conn, ps);
+        }
+
+       public void updateFreeBoard(BoardVO board, String userID) {
+        String sql = "update free_board set title = ?, content = ? where post_id = ? and user_id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+            ps.setString(1, board.getTitle());
+            ps.setString(2, board.getContent());
+            ps.setInt(3, board.getPost_id());
+            ps.setString(4, userID);
+
+            int rs = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, ps);
+        }
+
     public void updateFreeBoard(BoardVO board, String userID) {
         String sql = "update free_board set title = ?, content = ? where post_id = ? and user_id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
-
-        try {
+      
+       try {
             conn = DBManager.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, board.getTitle());
@@ -686,30 +784,6 @@ public List<BoardTeamVO> selectPagingTeamBoard(int offset, int pageSize) {
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

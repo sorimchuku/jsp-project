@@ -76,8 +76,8 @@
                                     <span style="color: gray">${user.userID}</span>
                                 </div>
                                 <div class="d-md-inline d-flex justify-content-center gap-4 btn-group-lg text-nowrap">
-                                    <button class="btn btn-secondary mx-1" onclick="location.href='/logout.jsp'">로그아웃</button>
-                                    <button class="btn btn-secondary mx-1" onclick="location.href='/mypage'">마이페이지</button>
+                                    <button class="btn btn-outline-secondary mx-1" onclick="location.href='/logout.jsp'">로그아웃</button>
+                                    <button class="btn btn-outline-primary mx-1" onclick="location.href='/mypage'">마이페이지</button>
                                 </div>
                             </div>
                         </c:if>
@@ -85,14 +85,14 @@
                     <c:if test="${user == null}">
                         <div>
                             <div class="d-flex justify-content-between align-items-center border-bottom p-4 my-4 w-100">
-                                <span class="fs-5">로그인하면 개인 기록을 작성할 수 있습니다.</span>
+                                <span class="fs-6">로그인하면 개인 기록을 작성할 수 있습니다.</span>
                             </div>
                         </div>
                     </c:if>
                     <c:if test="${user != null}">
                     <div>
                         <div class="d-flex justify-content-between align-items-center border-bottom p-4 my-4 w-100">
-                            <span class="fs-4">개인 기록</span>
+                            <span class="fs-4 fw-bold">개인 기록</span>
                             <button class="btn btn-light" onclick="location.href='/blog'">더보기</button>
                         </div>
 
@@ -101,7 +101,7 @@
                                 <c:forEach var="blog" items="${blogList}">
                                     <div class="border rounded-3 p-4 mb-2" role="button" onclick="location.href='/blog/view?id=${blog.post_id}'">
                                         <div class="d-flex gap-2 justify-content-start align-items-center">
-                                            <span class="h4">${blog.title}</span>
+                                            <span class="h5">${blog.title}</span>
                                             <c:if test="${blog.is_private == true}">
                                                 <i class="bi bi-lock-fill text-secondary"></i>
                                             </c:if>
@@ -130,6 +130,89 @@
                     </div>
                     </c:if>
                 </div>
+
+                <div class="col">
+                    <div class="container">
+                        <div class="px-5 mb-5">
+                            <div class="d-flex justify-content-between  border-bottom mb-3 p-3">
+                                <span class="fs-4 fw-bold">자유 게시판</span>
+                                <button type="button" class="btn btn-light" onclick="location.href='/freeboard'">더보기</button>
+                            </div>
+
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="list-group-numbered"><a>#</a></th>
+                                    <th scope="col" class="title col-6"><a>제목</a></th>
+                                    <th scope="col" class="user-id text-nowrap"><a>작성자</a></th>
+                                    <th scope="col" class="created-at"><a>작성일</a></th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <c:forEach var="freeboard" items="${freeboardList}">
+                                    <tr>
+                                        <td>${freeboard.post_id}</td>
+                                        <td class="col-6 ">
+                                            <a href="/freeboard/view?id=${freeboard.post_id}" class="text-decoration-none">
+                                                <div class="fs-5 text-black mb-1 ">
+                                                        ${freeboard.title}
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td class="text-nowrap">${freeboard.nickname}</td>
+                                        <td>${freeboard.date}</td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="px-5">
+                            <div class="d-flex justify-content-between  border-bottom mb-3 p-3">
+                                <span class="fs-4 fw-bold">모집 게시판</span>
+                                <button type="button" class="btn btn-light" onclick="location.href='/team'">더보기</button>
+                            </div>
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="list-group-numbered">#</th>
+                                    <th scope="col" class="title col-6">제목</th>
+                                    <th scope="col" class="user-id text-nowrap">작성자</th>
+                                    <th scope="col" class="created-at">작성일</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="joinboard" items="${joinList}">
+                                    <tr>
+                                        <td>${joinboard.post_id}</td>
+                                        <td class="col-6">
+                                            <a href="/team/view?id=${joinboard.post_id}" class="text-decoration-none">
+                                                <div class="fs-5 text-black mb-1">
+                                                        ${joinboard.title}
+                                                </div>
+                                                <div class="text-secondary mb-1">
+                                                    <span>${joinboard.location}</span>
+                                                    <span> | </span>
+                                                    <span>${joinboard.member_num}명</span>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td class="text-nowrap">${joinboard.nickname}</td>
+                                        <td>${joinboard.date}</td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </section>

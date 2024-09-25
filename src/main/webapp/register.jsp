@@ -11,9 +11,25 @@
   <!-- Bootstrap icons-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
   <!-- Core theme CSS (includes Bootstrap)-->
-  <link href="css/styles.css" rel="stylesheet" />
+  <link href="/css/styles.css" rel="stylesheet" />
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
+<script language="JavaScript">
+    function goPopup(){
+        // 주소검색을 수행할 팝업 페이지를 호출합니다.
+        // 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://business.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
+        var pop = window.open("/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+
+        // 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://business.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
+        //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes");
+    }
+
+    function jusoCallBack(roadFullAddr,roadAddrPart1){
+        // 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
+        document.querySelector("#roadAddrPart1").value = roadAddrPart1;
+
+    }
+</script>
 <body>
 
 <section class="h-100 bg-dark">
@@ -108,19 +124,14 @@
                 </div>
 
                 <div class="row mb-4">
-                  <h6 class="col-sm-2 col-form-label col-form-label-lg">지역</h6>
+                  <h6 class="col-sm-2 col-form-label col-form-label-lg">주소</h6>
                   <div class="col-10 ">
-                    <label class="visually-hidden" for="location_select">지역</label>
-                    <select class="form-select form-select-lg" id="location_select" name="location_select">
-                      <option selected value="" >선택하세요</option>
-                      <%
-                        String[] busanDistricts = {"강서구", "금정구", "기장군", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구"};
-                        for (String district : busanDistricts) {
-                          out.println("<option value=\"" + district + "\">" + district + "</option>");
-                        }
-                      %>
-                    </select>
-                  </div>
+                    <label class="visually-hidden" for="roadAddrPart1">주소</label>
+                    <div class="input-group input-group-lg">
+                      <input type="text" class="form-control"  id="roadAddrPart1"  name="location_select">
+                      <button type="button" class="btn btn-secondary" onclick="goPopup()">주소검색</button>
+                    </div>
+                </div>
                 </div>
 
                 <div class="d-flex justify-content-end pt-3">
@@ -140,6 +151,6 @@
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
-<script src="js/scripts.js"></script>
+<script src="/js/scripts.js"></script>
 </body>
 </html>
