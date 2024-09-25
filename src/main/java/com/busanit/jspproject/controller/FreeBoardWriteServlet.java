@@ -46,6 +46,7 @@ public class FreeBoardWriteServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         UserVO user = (UserVO) session.getAttribute("user");
+
         BoardVO board = new BoardVO();
         board.setTitle(request.getParameter("title"));
         board.setContent(request.getParameter("content"));

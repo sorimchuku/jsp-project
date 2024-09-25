@@ -40,9 +40,7 @@
       <c:forEach var="board" items="${boardList}">
         <tr>
           <td>${board.post_id}</td>
-
           <td>
-
             <a href="/freeboard/view?id=${board.post_id}" class="text-decoration-none">
               <div class="fs-5 text-black mb-1">
                   ${board.title}
