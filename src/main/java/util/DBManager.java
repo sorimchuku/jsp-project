@@ -2,10 +2,8 @@ package util;
 
 import java.sql.*;
 
-public class DBManger {
+public class DBManager {
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        Connection con = null;
-
         String url = "jdbc:mysql://localhost:3306/jsp_project";
         String user = "root";
         String password = "1234";
@@ -21,9 +19,12 @@ public class DBManger {
 
     public static void close(Connection conn, Statement stmt, ResultSet rs) {
         try{
-            rs.close();
-            stmt.close();
-            conn.close();
+            if (rs != null)
+                rs.close();
+            if (stmt != null)
+                stmt.close();
+            if (conn != null)
+                conn.close();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -34,8 +35,10 @@ public class DBManger {
     //executeUpdate() - int
     public static void close(Connection conn, Statement stmt) {
         try{
-            stmt.close();
-            conn.close();
+            if (stmt != null)
+                stmt.close();
+            if (conn != null)
+                conn.close();
         }catch(Exception e){
             e.printStackTrace();
         }
