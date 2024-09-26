@@ -9,11 +9,23 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>자유게시판 - 수정</title>
+    <title>자유 게시판 - 수정</title>
 </head>
 <body>
 <%@include file="layout/header.jsp"%>
-<main>
+
+<!-- Header-->
+<header class="bg-dark py-4">
+    <div class="container px-5">
+        <div class=" align-items-center justify-content-start">
+            <div class="text-xl-start">
+                <h1 class="display-8 fw-bolder text-white mb-2">자유 게시판 수정</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
     <div class="row p-5">
         <c:if test="${sessionScope.user == null}">
         <div class="border rounded-3 w-75 p-4 py-5 mx-auto d-flex flex-column justify-content-center align-items-center">
@@ -23,27 +35,26 @@
         </c:if>
 
         <div id="wrap" align="center">
-            <h1>모집 게시판 수정</h1>
             <form action="/freeboard/edit" method="post">
                 <input type="hidden" value="${board.post_id}" name="id">
-                <table>
-                    <tr>
-                        <th>제목</th>
-                        <td><input type="text" size="70" name="title" value="${board.title}">  * 필수</td>
-                    </tr>
-                    <tr>
-                        <th>이미지</th>
-                        <td><input type="file" name="img"><input type="submit" value="upload"></td>
-                    </tr>
-                    <tr>
-                        <th>내용</th>
-                        <td><textarea cols="70" rows="15" name="content">${board.content}</textarea></td>
-                    </tr>
-                </table>
-                <br><br>
-                <input type="submit" value="등록">
-                <input type="reset" value="다시 작성">
-                <input type="button" value="목록" onclick="location.href='/board/list'">
+                <div class="input-group input-group-lg mb-4">
+                    <input type="text" class="form-control rounded-2" value="${board.title}" aria-label="title" name="title"
+                           required>
+                    <span class="input-group-text bg-transparent border-0">*필수</span>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">이미지</span>
+                    <input type="text" readonly class="form-control" name="img" value="${board.img_url}">
+                </div>
+
+                <textarea class="form-control" rows="15" name="content">${board.content}</textarea>
+
+                <div class="d-flex justify-content-center gap-3 my-4">
+                    <button type="submit" class="btn btn-primary px-3">등록</button>
+                    <input type="reset" class="btn btn-secondary px-3" value="다시 작성">
+                    <button class="btn btn-secondary px-3 btn" onclick="location.href='/freeboard'">목록</button>
+                </div>
             </form>
         </div>
 </main>

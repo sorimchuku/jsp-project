@@ -38,6 +38,7 @@ public class JoinBoardUpdateServlet extends HttpServlet {
         board.setLocation(request.getParameter("location"));
         board.setMember_num(Integer.parseInt(request.getParameter("member_num")));
         board.setBoard_type("team_board");
+        board.setImg_url(request.getParameter("img_url"));
 
         BoardDAO dao = new BoardDAO();
         dao.updateTeam(board, user.getUserID());
