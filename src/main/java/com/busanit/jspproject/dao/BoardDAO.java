@@ -12,17 +12,33 @@ import java.util.List;
 public class BoardDAO {
 
     // 모집게시판 전체 게시글 불러오기
-    public void updateCount(String postID, String boardName) {
-        String sql = "update " + boardName + " set read_count = read_count + 1 where post_id = ?";
+    public void updateCount(String postID, String boardType) {
+        String sql = "";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
 
         try {
             conn = DBManager.getConnection();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, postID);
-            int rs = pstmt.executeUpdate();
+
+            if (!boardType.isEmpty()) {
+                switch (boardType) {
+                    case "free_board": {
+                        sql = "update free_board set read_count = read_count + 1 where post_id = ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, postID);
+                        break;
+                    }
+                    case "team": {
+                        sql = "update team_board set read_count = read_count + 1 where post_id = ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, postID);
+                        break;
+                    }
+                }
+
+                int rs = pstmt.executeUpdate();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

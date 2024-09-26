@@ -18,10 +18,12 @@ public class FreeBoardViewServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "/freeBoardView.jsp";
         String id = request.getParameter("id");
+        String boardType = "free_board";
 
         BoardDAO dao = new BoardDAO();
+        List<CommentVO> commentList = dao.getCommentList(Integer.parseInt(id), boardType);
+        dao.updateCount(id, boardType);
         BoardVO board = dao.viewFreeBoard(id);
-        List<CommentVO> commentList = dao.getCommentList(Integer.parseInt(id), board.getBoard_type());
 
         request.setAttribute("board", board);
         request.setAttribute("commentList", commentList);

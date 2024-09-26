@@ -63,6 +63,7 @@
         <th  scope="col" class="title col-6"><a>제목</a></th>
         <th scope="col" class="user-id"><a>작성자</a></th>
         <th scope="col" class="created-at"><a>작성일</a></th>
+        <th scope="col"><a>조회수</a></th>
       </tr>
       </thead>
       <tbody>
@@ -87,6 +88,7 @@
           </td>
           <td>${board.nickname}</td>
           <td>${board.date}</td>
+          <td class="text-center">${board.read_count}</td>
         </tr>
       </c:forEach>
       </tbody>
