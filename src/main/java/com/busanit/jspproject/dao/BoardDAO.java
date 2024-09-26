@@ -354,7 +354,7 @@ public class BoardDAO {
     }
 
     public void updateTeam(BoardVO board, String userID) {
-        String sql = "update team_board set title = ?, location = ? , member_num = ? , content = ?, ing_url = ? where post_id = ? and user_id = ?";
+        String sql = "update team_board set title = ?, location = ? , member_num = ? , content = ?, img_url = ? where post_id = ? and user_id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -528,7 +528,7 @@ public class BoardDAO {
     }
 
     public void updateFreeBoard(BoardVO board, String userID) {
-        String sql = "update free_board set title = ?, content = ?, Img_url = ? where post_id = ? and user_id = ?";
+        String sql = "update free_board set title = ?, content = ?, img_url = ? where post_id = ? and user_id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
 
