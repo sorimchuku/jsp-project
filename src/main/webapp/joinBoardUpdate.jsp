@@ -71,8 +71,7 @@
         </div>
         <div class="input-group mb-3">
           <span class="input-group-text">이미지</span>
-          <input type="file" class="form-control" name="img">
-          <input type="submit" class="btn btn-outline-secondary" value="업로드">
+          <input type="text" readonly class="form-control" name="img" value="${board.img_url}">
         </div>
         <textarea class="form-control" rows="15" name="content">${board.content}</textarea>
         <div class="d-flex justify-content-center gap-3 my-4">

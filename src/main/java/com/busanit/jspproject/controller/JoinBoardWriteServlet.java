@@ -54,7 +54,12 @@ public class JoinBoardWriteServlet extends HttpServlet {
         board.setTitle(request.getParameter("title"));
         board.setContent(request.getParameter("content"));
         board.setLocation(request.getParameter("location"));
-        board.setMember_num(Integer.parseInt(request.getParameter("member_num")));
+        String memberStr = request.getParameter("member_num");
+        int memberNum = 0;
+        if (!memberStr.isEmpty()) {
+            memberNum = parseInt(memberStr);
+        }
+        board.setMember_num(memberNum);
         board.setBoard_type("team");
         board.setImg_url(fileName);
 

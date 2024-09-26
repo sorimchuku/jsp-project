@@ -43,11 +43,12 @@
     <div class="border-bottom px-4 mb-4 d-flex justify-content-between align-items-center">
       <span class="h4 fw-bold">모집 게시판 상세페이지</span>
       <div class="d-flex justify-content-center gap-3 my-4">
-        <div class="btn-group">
-          <button class="btn btn-outline-secondary" onclick="location.href='/team/edit?id=${board.post_id}'">수정</button>
-          <button class="btn btn-outline-danger" onclick="openModal('delete')">삭제</button>
-        </div>
-
+        <c:if test="${sessionScope.user.userID == board.user_id}">
+          <div class="btn-group">
+            <button class="btn btn-outline-secondary" onclick="location.href='/team/edit?id=${board.post_id}'">수정</button>
+            <button class="btn btn-outline-danger" onclick="openModal('delete')">삭제</button>
+          </div>
+        </c:if>
       </div>
     </div>
     <c:if test="${board != null}">
@@ -79,15 +80,12 @@
           </div>
         </div>
       </div>
-
-      <c:if test="${board.img_url != ''}">
-        <div class="card">
-          <img class="card-img" src="${pageContext.request.contextPath}/image?filename=${board.img_url}" alt="Test Image">
-        </div>
-      </c:if>
-
-      <div class="h-25 w-100 p-4 border-bottom">${board.content}</div>
-
+      <div class="border-bottom">
+        <c:if test="${board.img_url != '' && board.img_url != null}">
+          <img class="h-auto w-auto mh-100 mw-100" src="${pageContext.request.contextPath}/image?filename=${board.img_url}" alt="${board.img_url}">
+        </c:if>
+        <div class="w-100 p-4 ">${board.content}</div>
+      </div>
       <%@include file="comment.jsp"%>
 
       <div class="row m-4">

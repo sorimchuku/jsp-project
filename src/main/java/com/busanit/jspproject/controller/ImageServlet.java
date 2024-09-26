@@ -17,6 +17,7 @@ public class ImageServlet extends HttpServlet {
         File file = new File(uploadFilePath + File.separator + filename);
 
         if (file.exists()) {
+            request.setAttribute("imageExists", true);
             response.setContentType(getServletContext().getMimeType(file.getName()));
             response.setContentLength((int) file.length());
 
@@ -29,6 +30,7 @@ public class ImageServlet extends HttpServlet {
                 }
             }
         } else {
+            request.setAttribute("imageExists", false);
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
 

@@ -3,6 +3,7 @@ package com.busanit.jspproject.controller;
 import com.busanit.jspproject.dao.BoardDAO;
 import com.busanit.jspproject.dto.BoardTeamVO;
 import com.busanit.jspproject.dto.BoardVO;
+import com.busanit.jspproject.dto.SearchVO;
 import com.busanit.jspproject.dto.UserVO;
 import util.PageHandler;
 
@@ -27,8 +28,9 @@ public class IndexPageServlet extends HttpServlet {
         }
 
 
-        List<BoardTeamVO> joinList = dao.selectPagingTeamBoard(0, 5);
-        List<BoardTeamVO> freeboardList = dao.getJoinFreeBoardList();
+
+        List<BoardTeamVO> joinList = dao.selectPagingTeamBoard(new SearchVO(), 0, 5);
+        List<BoardTeamVO> freeboardList = dao.selectPagingFreeBoard(new SearchVO(), 0, 5);
         request.setAttribute("freeboardList", freeboardList);
         request.setAttribute("joinList", joinList);
         request.getRequestDispatcher("home.jsp").forward(request, response);

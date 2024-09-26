@@ -86,13 +86,6 @@
               <span class="form-control text-nowrap" id="running_time"></span>
             </div>
           </div>
-          <div class="col  my-1">
-            <div class="input-group flex-nowrap">
-              <span class="input-group-text">칼로리</span>
-              <span class="form-control" id="cal"></span>
-              <span class="input-group-text">kcal</span>
-            </div>
-          </div>
         </div>
       </div>
       <div class="h-25 w-100 p-4 border-bottom">${board.content}</div>
