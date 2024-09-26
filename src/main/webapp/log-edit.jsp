@@ -54,9 +54,8 @@
   <div class="container px-5 my-5">
     <div class="border-bottom p-4 mb-4">
       <span class="h4 fw-bold">개인 기록 :: </span>
-  </div>
+    </div>
     <form action="/blog/edit" method="post">
-      <input type="hidden" value="${board.post_id}" name="id">
       <div class="input-group input-group-lg mb-4">
         <input type="text" class="form-control" placeholder="제목" aria-label="title" name="title" value="${board.title}">
         <div class="input-group-text">
@@ -85,7 +84,6 @@
         <button type="submit" class="btn btn-primary px-3 btn" onclick="return checkLogWrite()">등록</button>
         <input type="reset" class="btn btn-secondary px-3" value="다시 작성">
         <button class="btn btn-secondary px-3 btn" onclick="location.href='/blog'">목록</button>
-      </div>
       </div>
     </form>
   </div>

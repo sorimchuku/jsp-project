@@ -199,7 +199,7 @@ public class BoardDAO {
     }
 
 
-
+/*
     public List<BoardVO> selectAllTeamBoard() {
         String sql = "SELECT * FROM team_board ORDER BY post_id DESC";
 
@@ -291,8 +291,9 @@ public class BoardDAO {
 
         return list;
     }
-
-
+*/
+    //모집 게시판
+    //모집 게시판 CRUD
     public void insertTeam(BoardVO board, String userID) {
         String sql = "INSERT INTO team_board (title, location, member_num, content, user_id, board_type, img_url) values (?, ?, ?, ?, ?, ?, ?)";
         Connection conn = null;
@@ -353,7 +354,7 @@ public class BoardDAO {
     }
 
     public void updateTeam(BoardVO board, String userID) {
-        String sql = "update team_board set title = ?, location = ? , member_num = ? , content = ? where post_id = ? and user_id = ?";
+        String sql = "update team_board set title = ?, location = ? , member_num = ? , content = ?, ing_url = ? where post_id = ? and user_id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -364,8 +365,9 @@ public class BoardDAO {
             ps.setString(2, board.getLocation());
             ps.setInt(3, board.getMember_num());
             ps.setString(4, board.getContent());
-            ps.setInt(5, board.getPost_id());
-            ps.setString(6, userID);
+            ps.setString(5, board.getImg_url());
+            ps.setInt(6, board.getPost_id());
+            ps.setString(7, userID);
 
             int rs = ps.executeUpdate();
         } catch (Exception e) {
@@ -470,8 +472,8 @@ public class BoardDAO {
 
 
 
-    /* 자유 게시판 */
-
+    //자유 게시판
+    //CRUD
     public void insertFreeBoard(BoardVO board, String userID) {
         String sql = "INSERT INTO Free_board (title, content, user_id, board_type, img_url) values (?, ?, ?, ?, ?)";
         Connection conn = null;
@@ -526,7 +528,7 @@ public class BoardDAO {
     }
 
     public void updateFreeBoard(BoardVO board, String userID) {
-        String sql = "update free_board set title = ?, content = ? where post_id = ? and user_id = ?";
+        String sql = "update free_board set title = ?, content = ?, Img_url = ? where post_id = ? and user_id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -535,8 +537,9 @@ public class BoardDAO {
             ps = conn.prepareStatement(sql);
             ps.setString(1, board.getTitle());
             ps.setString(2, board.getContent());
-            ps.setInt(3, board.getPost_id());
-            ps.setString(4, userID);
+            ps.setString(3,board.getImg_url());
+            ps.setInt(4, board.getPost_id());
+            ps.setString(5, userID);
 
             int rs = ps.executeUpdate();
         } catch (Exception e) {
@@ -570,7 +573,7 @@ public class BoardDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select f.post_id, f.title, f.date, f.user_id, f.board_type, u.nickname from user_info u inner join free_board f on u.user_id = f.user_id order by f.post_id desc";
+        String sql = "select f.post_id, f.title, f.date, f.img_url, f.user_id, f.board_type, u.nickname from user_info u inner join free_board f on u.user_id = f.user_id order by f.post_id desc";
 
         try {
             conn = DBManager.getConnection();
@@ -582,6 +585,7 @@ public class BoardDAO {
                 board.setPost_id(rs.getInt("post_id"));
                 board.setTitle(rs.getString("title"));
                 board.setDate(rs.getString("date"));
+                board.setImg_url(rs.getString("img_url"));
                 board.setUser_id(rs.getString("user_id"));
                 board.setBoard_type(rs.getString("board_type"));
                 board.setNickname(rs.getString("nickname"));
