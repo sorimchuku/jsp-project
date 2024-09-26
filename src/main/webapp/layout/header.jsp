@@ -22,6 +22,7 @@
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0  text-nowrap">
         <c:if test="${sessionScope.user == null}">
+          <li class="nav-item fs-5"><a class="nav-link" href="/">로그인</a></li>
           <li class="nav-item fs-5"><a class="nav-link" href="/register">회원가입</a></li>
         </c:if>
         <c:if test="${sessionScope.user != null}">

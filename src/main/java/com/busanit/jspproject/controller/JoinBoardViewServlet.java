@@ -18,10 +18,13 @@ public class JoinBoardViewServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "/joinBoardView.jsp";
         String id = request.getParameter("id");
+        String boardType = "team";
 
         BoardDAO dao = new BoardDAO();
+
+        List<CommentVO> commentList = dao.getCommentList(Integer.parseInt(id), boardType);
+        dao.updateCount(id, boardType);
         BoardVO board = dao.viewTeam(id);
-        List<CommentVO> commentList = dao.getCommentList(Integer.parseInt(id), board.getBoard_type());
 
         request.setAttribute("board", board);
         request.setAttribute("commentList", commentList);

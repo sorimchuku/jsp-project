@@ -145,6 +145,7 @@
                                     <th scope="col" class="title col-6">제목</th>
                                     <th scope="col" class="user-id text-nowrap">작성자</th>
                                     <th scope="col" class="created-at">작성일</th>
+                                    <th scope="col" class="text-nowrap">조회수</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -153,7 +154,7 @@
                                         <td>${joinboard.post_id}</td>
                                         <td class="col-6">
                                             <a href="/team/view?id=${joinboard.post_id}" class="text-decoration-none">
-                                                <div class="fs-5 text-black mb-1">
+                                                <div class="fs-5 text-black mb-1 text-break">
                                                         ${joinboard.title}
                                                 </div>
                                                 <div class="text-secondary mb-1">
@@ -165,6 +166,7 @@
                                         </td>
                                         <td class="text-nowrap">${joinboard.nickname}</td>
                                         <td>${joinboard.date}</td>
+                                        <td class="text-center">${joinboard.read_count}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -188,6 +190,7 @@
                                     <th scope="col" class="title col-6"><a>제목</a></th>
                                     <th scope="col" class="user-id text-nowrap"><a>작성자</a></th>
                                     <th scope="col" class="created-at"><a>작성일</a></th>
+                                    <th scope="col" class="text-nowrap"><a>조회수</a></th>
                                 </tr>
                                 </thead>
 
@@ -196,7 +199,7 @@
                                     <tr>
                                         <td>${freeboard.post_id}</td>
                                         <td class="col-6 ">
-                                            <a href="/freeboard/view?id=${freeboard.post_id}" class="text-decoration-none">
+                                            <a href="/freeboard/view?id=${freeboard.post_id}" class="text-decoration-none text-break">
                                                 <div class="fs-5 text-black mb-1 ">
                                                         ${freeboard.title}
                                                 </div>
@@ -204,6 +207,7 @@
                                         </td>
                                         <td class="text-nowrap">${freeboard.nickname}</td>
                                         <td>${freeboard.date}</td>
+                                        <td class="text-center">${freeboard.read_count}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
