@@ -39,6 +39,7 @@ public class FreeBoardUpdateServlet extends HttpServlet {
         board.setTitle(request.getParameter("title"));
         board.setContent(request.getParameter("content"));
         board.setBoard_type("free_board");
+        board.setImg_url(request.getParameter("img_url"));
 
         BoardDAO dao = new BoardDAO();
         dao.updateFreeBoard(board, user.getUserID());
