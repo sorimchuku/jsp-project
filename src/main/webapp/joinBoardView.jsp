@@ -58,6 +58,8 @@
           <span>${board.nickname}</span>
           <span> · </span>
           <span>${board.date}</span>
+          <span> · </span>
+          <span>조회수 ${board.read_count}</span>
         </div>
 
       </div>
