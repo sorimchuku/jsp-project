@@ -28,7 +28,7 @@
       <h6 class="fw-bold mb-3">${sessionScope.user.nickname}</h6>
       <div class="row align-items-end">
         <div class="col-auto flex-grow-1">
-          <textarea rows="3" class="form-control" name="comment"></textarea>
+          <textarea rows="3" class="form-control" name="comment" required></textarea>
         </div>
         <div class="col-auto">
           <button type="submit" class="btn btn-primary col-auto">댓글 작성</button>
