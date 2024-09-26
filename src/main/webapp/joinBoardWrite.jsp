@@ -66,7 +66,7 @@
         <div class="input-group mb-3">
           <input type="file" class="form-control" name="img">
         </div>
-        <textarea class="form-control" rows="15" name="content" placeholder="내용"></textarea>
+        <textarea class="form-control" rows="15" style="resize: none;" name="content" placeholder="내용"></textarea>
 
         <div class="d-flex justify-content-center gap-3 my-4">
           <button type="submit" class="btn btn-primary px-3">등록</button>

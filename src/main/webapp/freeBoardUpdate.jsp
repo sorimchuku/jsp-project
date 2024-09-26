@@ -48,7 +48,7 @@
                     <input type="text" readonly class="form-control" name="img_url" value="${board.img_url}">
                 </div>
 
-                <textarea class="form-control" rows="15" name="content">${board.content}</textarea>
+                <textarea class="form-control" rows="15" style="resize: none;" name="content">${board.content}</textarea>
 
                 <div class="d-flex justify-content-center gap-3 my-4">
                     <button type="submit" class="btn btn-primary px-3">등록</button>
