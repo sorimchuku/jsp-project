@@ -10,6 +10,11 @@
 <html>
 <head>
   <title>자유 게시판</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body>
 <%@include file="layout/header.jsp"%>
@@ -40,7 +45,7 @@
       <c:forEach var="board" items="${boardList}">
         <tr>
           <td>${board.post_id}</td>
-          <td>
+          <td >
             <a href="/freeboard/view?id=${board.post_id}" class="text-decoration-none">
               <div class="fs-5 text-black mb-1">
                   ${board.title}
@@ -54,22 +59,45 @@
       </tbody>
 
     </table>
-  </div>
-  <div class="row m-4">
-    <div class="d-flex justify-content-center">
-      <nav id="pagination" aria-label="Page navigation" class="col-auto ms-auto">
-        <ul class="pagination justify-content-center">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-      </nav>
-      <div class="col-auto ms-auto">
-        <a class="btn btn-primary " role="button" id="write-article" href="/freeboard/write">글쓰기</a>
-      </div>
 
+    <div class="row m-4">
+      <div class="d-flex justify-content-center">
+        <nav id="pagination" aria-label="Page navigation" class="col-auto ms-auto">
+          <ul class="pagination justify-content-center">
+            <li class="page-item"${pageHandler.currentPage == 1 ?  "disabled" : ""}">
+            <a class="page-link" href="/freeboard?currentPage=1">Prev</a>
+            </li>
+            <c:if test="${pageHandler.showPrev}">
+              <li class="page-item">
+                <a class="page-link" href="/freeboard?currentPage=${pageHandler.beginPage - 1}">back</a>
+              </li>
+            </c:if>
+            <c:forEach var="i" begin="${pageHandler.beginPage}"
+                       end="${pageHandler.endPage}">
+              <li class="page-item ${pageHandler.currentPage == i ? "active" : ""}">
+                <a class="page-link"
+                   href="/freeboard?currentPage=${i}">${i}</a>
+              </li>
+            </c:forEach>
+            <c:if test="${pageHandler.showNext}">
+              <li class="page-item">
+                <a class="page-link" href="/freeboard?currentPage=${pageHandler.endPage + 1}">next</a>
+              </li>
+            </c:if>
+            <li class="page-item ${pageHandler.currentPage == pageHandler.totalPages ?  "disabled" : ""}">
+              <a class="page-link" href="/freeboard?currentPage=${pageHandler.totalPages}">End</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="col-auto ms-auto">
+          <a class="btn btn-primary " role="button" id="write-article" href="/freeboard/write">글쓰기</a>
+        </div>
+
+      </div>
     </div>
   </div>
+
+
 </div>
 </main>
 <%@include file="layout/footer.jsp"%>
