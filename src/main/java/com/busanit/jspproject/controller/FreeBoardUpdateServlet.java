@@ -16,11 +16,11 @@ import java.io.IOException;
 public class FreeBoardUpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = "/joinBoardUpdate.jsp";
+        String url = "/freeBoardUpdate.jsp";
         String id = request.getParameter("id");
 
         BoardDAO dao = new BoardDAO();
-        BoardVO board = dao.viewTeam(id);
+        BoardVO board = dao.viewFreeBoard(id);
 
         request.setAttribute("board", board);
         request.getRequestDispatcher(url).forward(request, response);
@@ -38,12 +38,10 @@ public class FreeBoardUpdateServlet extends HttpServlet {
 
         board.setTitle(request.getParameter("title"));
         board.setContent(request.getParameter("content"));
-        board.setLocation(request.getParameter("location"));
-        board.setMember_num(Integer.parseInt(request.getParameter("member_num")));
-        board.setBoard_type("team");
+        board.setBoard_type("free_board");
 
         BoardDAO dao = new BoardDAO();
-        dao.updateTeam(board, user.getUserID());
-        response.sendRedirect("/team");
+        dao.updateFreeBoard(board, user.getUserID());
+        response.sendRedirect("/freeboard");
     }
 }
