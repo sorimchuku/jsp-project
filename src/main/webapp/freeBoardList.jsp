@@ -65,7 +65,6 @@
         <th scope="col" class="created-at"><a>작성일</a></th>
       </tr>
       </thead>
-
       <tbody>
 
       <c:if test="${fn:length(boardList) <= 0}">
@@ -91,9 +90,7 @@
         </tr>
       </c:forEach>
       </tbody>
-
     </table>
-
     <div class="row m-4">
       <div class="d-flex justify-content-center">
         <nav id="pagination" aria-label="Page navigation" class="col-auto ms-auto">
@@ -126,12 +123,9 @@
         <div class="col-auto ms-auto">
           <a class="btn btn-primary " role="button" id="write-article" href="/freeboard/write">글쓰기</a>
         </div>
-
       </div>
     </div>
   </div>
-
-
 </div>
 </main>
 <%@include file="layout/footer.jsp"%>
