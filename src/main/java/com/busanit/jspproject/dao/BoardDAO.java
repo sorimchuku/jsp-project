@@ -1,9 +1,6 @@
 package com.busanit.jspproject.dao;
 
-import com.busanit.jspproject.dto.BoardTeamVO;
-import com.busanit.jspproject.dto.BoardVO;
-import com.busanit.jspproject.dto.CommentVO;
-import com.busanit.jspproject.dto.UserVO;
+import com.busanit.jspproject.dto.*;
 import util.DBManager;
 
 import java.sql.Connection;
@@ -197,8 +194,6 @@ public class BoardDAO {
         }
 
     }
-
-
 
     public List<BoardVO> selectAllTeamBoard() {
         String sql = "SELECT * FROM team_board ORDER BY post_id DESC";
@@ -395,9 +390,10 @@ public class BoardDAO {
     }
 
     //모집 게시판 페이지네이션
-    public List<BoardTeamVO> selectPagingTeamBoard(int offset, int pageSize) {
+    public List<BoardTeamVO> selectPagingTeamBoard(SearchVO search, int offset, int pageSize) {
 
         String sql = "";
+        String selectFrom = "t.post_id, t.title, t.content, t.date, t.user_id, t.board_type, u.nickname, t.member_num, t.location, t.read_count FROM user_info u inner join team_board t on u.user_id = t.user_id";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -407,11 +403,63 @@ public class BoardDAO {
         try {
             conn = DBManager.getConnection();
 
-            sql = "SELECT t.post_id, t.title, t.content, t.date, t.user_id, t.board_type, u.nickname, t.member_num, t.location, t.read_count FROM user_info u inner join team_board t on u.user_id = t.user_id ORDER BY post_id DESC limit ?, ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, offset);
-            pstmt.setInt(2, pageSize);
+            if (search.searchType != null && !search.searchText.isEmpty()) {
+                switch (search.searchType) {
+                    case "title": {
 
+                        sql = "select " + selectFrom + " where title like ? ORDER BY post_id DESC limit ?, ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + search.searchText + "%");
+                        pstmt.setInt(2, offset);
+                        pstmt.setInt(3, pageSize);
+                        break;
+                    }
+                    case "content": {
+                        sql = "select " + selectFrom + " where content like ? ORDER BY post_id DESC limit ?, ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + search.searchText + "%");
+                        pstmt.setInt(2, offset);
+                        pstmt.setInt(3, pageSize);
+                        break;
+                    }
+                    case "titleContent": {
+                        sql = "select " + selectFrom + " where title like ? or content like ? ORDER BY post_id DESC limit ?, ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + search.searchText + "%");
+                        pstmt.setString(2, "%" + search.searchText + "%");
+                        pstmt.setInt(3, offset);
+                        pstmt.setInt(4, pageSize);
+                        break;
+                    }
+                    case "nickname": {
+                        sql = "select " + selectFrom + " where u.nickname like ? ORDER BY post_id DESC limit ?, ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + search.searchText + "%");
+                        pstmt.setInt(2, offset);
+                        pstmt.setInt(3, pageSize);
+                        break;
+                    }
+                    case "location" : {
+                        sql = "select " + selectFrom + " where t.location like ? ORDER BY post_id DESC limit ?, ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + search.searchText + "%");
+                        pstmt.setInt(2, offset);
+                        pstmt.setInt(3, pageSize);
+                        break;
+                    }
+                    default: {
+                        sql = "select " + selectFrom + " ORDER BY post_id DESC limit ?, ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setInt(1, offset);
+                        pstmt.setInt(2, pageSize);
+                    }
+                }
+            } else {
+                sql = "select " + selectFrom + " ORDER BY post_id DESC limit ?, ?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, offset);
+                pstmt.setInt(2, pageSize);
+            }
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -464,6 +512,71 @@ public class BoardDAO {
             e.printStackTrace();
         } finally {
             DBManager.close(conn, pstmt, rs);
+        }
+        return boardCnt;
+    }
+
+    public int selectSearchTeamBoardCount(SearchVO search) {
+        String sql;
+        int boardCnt = 0;
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBManager.getConnection();
+            if (search.searchType != null && !search.searchText.isEmpty()) {
+                switch (search.searchType) {
+                    case "title": {
+                        sql = "select count(*) as count from team_board where title like ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + search.searchText + "%");
+                        break;
+                    }
+                    case "content": {
+                        sql = "select count(*) as count from team_board where content like ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + search.searchText + "%");
+                        break;
+                    }
+                    case "titleContent": {
+                        sql = "select count(*) as count from team_board where title like ? or content like ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + search.searchText + "%");
+                        pstmt.setString(2, "%" + search.searchText + "%");
+                        break;
+                    }
+                    case "nickname": {
+                        sql = "select * from team_board t inner join user_info u on t.user_id = u.user_id where u.nickname like ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + search.searchText + "%");
+                        break;
+                    }
+                    case "location" : {
+                        sql = "select count(*) as count from team_board where location like ?";
+                        pstmt = conn.prepareStatement(sql);
+                        pstmt.setString(1, "%" + search.searchText + "%");
+                    }
+                    default: {
+                        sql = "select count(*) as count from team_board";
+                        pstmt = conn.prepareStatement(sql);
+                    }
+                }
+            } else {
+                sql = "select count(*) as count from team_board";
+                pstmt = conn.prepareStatement(sql);
+            }
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                boardCnt = rs.getInt("count");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+
         }
         return boardCnt;
     }

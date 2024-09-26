@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: admin
@@ -31,6 +32,30 @@
 <main>
 <div class="container text-center">
   <div class="p-5">
+    <div class="search m-3">
+      <form action="/team" method="post" >
+        <input type="hidden" value="${pageHandler.currentPage}&searchType=${searchVO.searchType}&searchText=${searchVO.searchText}">
+        <div class="row g-3  justify-content-end">
+          <div class="col-auto">
+            <select name="searchType" class="form-select" aria-label="검색 유형 선택">
+              <option ${searchVO.searchType == "" ? "selected" : ""} value="">----</option>
+              <option ${searchVO.searchType == "title" ? "selected" : ""} value="title">제목</option>
+              <option ${searchVO.searchType == "content" ? "selected" : ""} value="content">내용</option>
+              <option ${searchVO.searchType == "titleContent" ? "selected" : ""} value="titleContent">제목+내용</option>
+              <option ${searchVO.searchType == "nickname" ? "selected" : ""} value="nickname">작성자</option>
+              <option ${searchVO.searchType == "location" ? "selected" : ""} value="location">지역</option>
+            </select>
+          </div>
+          <div class="col-auto">
+            <input type="text" class="form-control" name="searchText" placeholder="검색어 입력" value="${searchVO.searchText}">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">검색</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
     <table class="table table-hover">
       <thead>
       <tr>
@@ -42,6 +67,14 @@
       </thead>
 
       <tbody>
+      <c:if test="${fn:length(boardList) <= 0}">
+        <tr>
+          <td colspan="5" style="border: white; text-align:center;">
+            검색 결과가 없습니다.
+          </td>
+        </tr>
+      </c:if>
+
       <c:forEach var="board" items="${boardList}">
             <tr>
               <td>${board.post_id}</td>
@@ -70,27 +103,27 @@
         <nav id="pagination" aria-label="Page navigation" class="col-auto ms-auto">
           <ul class="pagination justify-content-center">
             <li class="page-item"${pageHandler.currentPage == 1 ?  "disabled" : ""}">
-              <a class="page-link" href="/team?currentPage=1">Prev</a>
+              <a class="page-link" href="/team?currentPage=1&searchType=${searchVO.searchType}&searchText=${searchVO.searchText}">Prev</a>
             </li>
             <c:if test="${pageHandler.showPrev}">
               <li class="page-item">
-                <a class="page-link" href="/team?currentPage=${pageHandler.beginPage - 1}">back</a>
+                <a class="page-link" href="/team?currentPage=${pageHandler.beginPage - 1}&searchType=${searchVO.searchType}&searchText=${searchVO.searchText}">back</a>
               </li>
             </c:if>
             <c:forEach var="i" begin="${pageHandler.beginPage}"
                        end="${pageHandler.endPage}">
               <li class="page-item ${pageHandler.currentPage == i ? "active" : ""}">
                 <a class="page-link"
-                   href="/team?currentPage=${i}">${i}</a>
+                   href="/team?currentPage=${i}&searchType=${searchVO.searchType}&searchText=${searchVO.searchText}">${i}</a>
               </li>
             </c:forEach>
             <c:if test="${pageHandler.showNext}">
             <li class="page-item">
-              <a class="page-link" href="/team?currentPage=${pageHandler.endPage + 1}">next</a>
+              <a class="page-link" href="/team?currentPage=${pageHandler.endPage + 1}&searchType=${searchVO.searchType}&searchText=${searchVO.searchText}">next</a>
               </li>
             </c:if>
             <li class="page-item ${pageHandler.currentPage == pageHandler.totalPages ?  "disabled" : ""}">
-              <a class="page-link" href="/team?currentPage=${pageHandler.totalPages}">End</a>
+              <a class="page-link" href="/team?currentPage=${pageHandler.totalPages}&searchType=${searchVO.searchType}&searchText=${searchVO.searchText}">End</a>
             </li>
           </ul>
         </nav>
