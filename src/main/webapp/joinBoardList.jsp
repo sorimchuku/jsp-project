@@ -32,6 +32,7 @@
 <main>
 <div class="container text-center">
   <div class="p-5">
+
     <div class="search m-3">
       <form action="/team" method="post" >
         <input type="hidden" value="${pageHandler.currentPage}&searchType=${searchVO.searchType}&searchText=${searchVO.searchText}">
@@ -53,9 +54,9 @@
             <button type="submit" class="btn btn-primary mb-3">검색</button>
           </div>
         </div>
-
       </form>
     </div>
+
     <table class="table table-hover">
       <thead>
       <tr>

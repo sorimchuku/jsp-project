@@ -2,6 +2,7 @@ package com.busanit.jspproject.controller;
 
 import com.busanit.jspproject.dao.BoardDAO;
 import com.busanit.jspproject.dto.BoardTeamVO;
+import com.busanit.jspproject.dto.SearchVO;
 import util.PageHandler;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,13 @@ public class FreeBoardListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = "/freeBoardList.jsp";
 
+        String searchType = request.getParameter("searchType");
+        String searchText = request.getParameter("searchText");
+
+        SearchVO search = new SearchVO();
+        search.setSearchType(searchType);
+        search.setSearchText(searchText);
+
         // 페이지 정보
         int currPage = 1;
         String req_page = request.getParameter("currentPage");
@@ -29,7 +37,7 @@ public class FreeBoardListServlet extends HttpServlet {
 
         BoardDAO dao = new BoardDAO();
 
-        int totalCnt = dao.selectAllFreeBoardCount();
+        int totalCnt = dao.selectSearchFreeboardCount(search);
 
         // 페이징 관련 값 계산(생성자 호출)
         PageHandler pageHandler = new PageHandler(totalCnt, currPage);
@@ -38,14 +46,16 @@ public class FreeBoardListServlet extends HttpServlet {
         int offset = (currPage - 1) * pageHandler.getPageSize();
 
 
-        List<BoardTeamVO> freeBoardList = dao.selectPagingFreeBoard(offset, pageHandler.getPageSize());
+        List<BoardTeamVO> freeBoardList = dao.selectPagingFreeBoard(search, offset, pageHandler.getPageSize());
         request.setAttribute("boardList", freeBoardList);
         request.setAttribute("pageHandler", pageHandler);
+        request.setAttribute("searchVO", search);
         request.getRequestDispatcher(url).forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setCharacterEncoding("UTF-8");
+        doGet(request, response);
     }
 }
