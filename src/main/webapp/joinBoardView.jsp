@@ -79,15 +79,15 @@
           </div>
         </div>
       </div>
-
+      <div class="h-50 border-bottom">
       <c:if test="${board.img_url != ''}">
-        <div class="h-50">
-          <img class="" src="${pageContext.request.contextPath}/image?filename=${board.img_url}" alt="${board.img_url}">
-        </div>
+
+          <img class="h-50" src="${pageContext.request.contextPath}/image?filename=${board.img_url}" alt="${board.img_url}">
+
       </c:if>
 
-      <div class="h-25 w-100 p-4 border-bottom">${board.content}</div>
-
+      <div class="w-100 p-4 ">${board.content}</div>
+      </div>
       <%@include file="comment.jsp"%>
 
       <div class="row m-4">

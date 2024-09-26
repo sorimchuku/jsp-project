@@ -27,8 +27,9 @@ public class IndexPageServlet extends HttpServlet {
         }
 
 
+
         List<BoardTeamVO> joinList = dao.selectPagingTeamBoard(0, 5);
-        List<BoardTeamVO> freeboardList = dao.getJoinFreeBoardList();
+        List<BoardTeamVO> freeboardList = dao.selectPagingFreeBoard(0, 5);
         request.setAttribute("freeboardList", freeboardList);
         request.setAttribute("joinList", joinList);
         request.getRequestDispatcher("home.jsp").forward(request, response);
