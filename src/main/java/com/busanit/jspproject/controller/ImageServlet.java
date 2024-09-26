@@ -10,11 +10,11 @@ import java.io.OutputStream;
 
 @WebServlet("/image")
 public class ImageServlet extends HttpServlet {
-    private static final String LOCAL_PROJECT_PATH = "C:\\eom\\jsp-project\\jsp-project\\src\\uploads";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String filename = request.getParameter("filename");
-        File file = new File(LOCAL_PROJECT_PATH + File.separator + filename);
+        String uploadFilePath = "C:\\uploads";
+        File file = new File(uploadFilePath + File.separator + filename);
 
         if (file.exists()) {
             response.setContentType(getServletContext().getMimeType(file.getName()));

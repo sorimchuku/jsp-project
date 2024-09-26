@@ -11,7 +11,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-  <title>team</title>
+  <title>모집 게시판</title>
   <!-- Favicon-->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <!-- Bootstrap icons-->
@@ -80,11 +80,10 @@
         </div>
       </div>
 
-      <c:if test="${board.img_url != null}">
-        <div class="card">
-          <img class="card-img" src="${pageContext.request.contextPath}/image?filename=${board.img_url}" alt="Test Image">
+      <c:if test="${board.img_url != ''}">
+        <div class="h-50">
+          <img class="" src="${pageContext.request.contextPath}/image?filename=${board.img_url}" alt="${board.img_url}">
         </div>
-
       </c:if>
 
       <div class="h-25 w-100 p-4 border-bottom">${board.content}</div>

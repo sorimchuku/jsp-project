@@ -14,10 +14,27 @@ public class PageHandler {
         this.currentPage = currentPage;
         this.pageSize = pageSize;
         totalPages  = (int)Math.ceil((double)totalCnt / pageSize);
+
+        /*
+            naviSize = 10
+            currentPage / beginPage
+                5             1
+                11      /     11
+                15      /     11
+                25      /     22
+
+        */
+
+/*
         beginPage = ((currentPage - 1) / navSize) * navSize + 1;
         endPage = Math.min(beginPage + navSize - 1, totalPages - 1);
         showPrev = beginPage > 1;
         showNext = endPage != totalPages - 1;
+        8*/
+        beginPage = (currentPage - 1) / navSize * navSize + 1;
+        endPage = Math.min(beginPage + navSize - 1, totalPages );
+        showPrev = beginPage != 1;
+        showNext = endPage != totalPages;
     }
 
     public int getTotalCnt() {
