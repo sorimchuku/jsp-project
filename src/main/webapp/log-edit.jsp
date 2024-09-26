@@ -58,6 +58,7 @@
     <form action="/blog/edit" method="post">
       <div class="input-group input-group-lg mb-4">
         <input type="text" class="form-control" placeholder="제목" aria-label="title" name="title" value="${board.title}">
+        <input type="hidden" value="${board.post_id}" name="id">
         <div class="input-group-text">
           비밀글
           <input class="form-check-input mt-0 ms-2" type="checkbox" name="" id="is_private" onchange="privateCheck()">
