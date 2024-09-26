@@ -17,18 +17,13 @@ import java.util.List;
 public class IndexPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         BoardDAO dao = new BoardDAO();
         UserVO user = (UserVO) request.getSession().getAttribute("user");
         if (user != null) {
             List<BoardVO> blogList = dao.getBlogList(user.getUserID(), 0, 3);
-
-
             request.setAttribute("blogList", blogList);
-
         }
-
-
-
         List<BoardTeamVO> joinList = dao.selectPagingTeamBoard(new SearchVO(), 0, 5);
         List<BoardTeamVO> freeboardList = dao.selectPagingFreeBoard(new SearchVO(), 0, 5);
         request.setAttribute("freeboardList", freeboardList);

@@ -24,16 +24,16 @@ public class LoginServlet extends HttpServlet {
 
         UserDAO dao = new UserDAO();
         UserVO userVO = dao.checkLogin(userID, userPW);
+        HttpSession session = request.getSession();
+        session.removeAttribute("loginError");
 
         if (userVO != null) {
-            HttpSession session = request.getSession();
             session.setAttribute("user", userVO);
-            response.sendRedirect("/");
-
         } else {
-            request.setAttribute("loginError", true);
-            request.getRequestDispatcher("/").forward(request, response);
+            session.setAttribute("loginError", "error");
         }
+
+        response.sendRedirect("/");
 
     }
 }
