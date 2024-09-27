@@ -35,7 +35,10 @@
   </c:if>
 
     <c:if test="${boardList != null}">
-  <div class="col-6 d-flex flex-column justify-content-center">
+  <div class="col-6 d-flex flex-column justify-content-start">
+    <c:if test="${boardList.isEmpty()}">
+      <span class="card text-center p-4">러닝 기록이 없습니다.<br>오늘의 러닝 기록을 작성해 보세요.</span>
+    </c:if>
       <c:forEach var="board" items="${boardList}">
         <div class="border rounded-3 p-4 mb-2" role="button" onclick="location.href='/blog/view?id=${board.post_id}'">
           <div class="d-flex gap-2 justify-content-start align-items-center">

@@ -83,7 +83,7 @@
                         </c:if>
                     </div>
                     <c:if test="${user == null}">
-                        <div>
+                        <div class="mb-4">
                             <div class="d-flex justify-content-between align-items-center border-bottom p-4 my-4 w-100">
                                 <span class="fs-6">로그인하면 개인 기록을 작성할 수 있습니다.</span>
                             </div>
@@ -98,6 +98,15 @@
 
                         <c:if test="${blogList != null}">
                             <div class="d-flex flex-column justify-content-center">
+                                <c:if test="${blogList.isEmpty()}">
+                                    <div class="card p-4">
+                                        <span class="text-center mb-3">러닝 기록이 없습니다.<br>오늘의 러닝 기록을 작성해 보세요.
+                                    </span>
+                                        <button type="button" class="btn btn-outline-secondary w-auto" onclick="location.href='/blog/write'">작성하기</button>
+                                    </div>
+
+
+                                </c:if>
                                 <c:forEach var="blog" items="${blogList}">
                                     <div class="border rounded-3 p-4 mb-2" role="button" onclick="location.href='/blog/view?id=${blog.post_id}'">
                                         <div class="d-flex gap-2 justify-content-start align-items-center">
@@ -133,7 +142,7 @@
 
                 <div class="col">
                     <div class="container">
-                        <div class="px-5">
+                        <div class="px-5 mb-5">
                             <div class="d-flex justify-content-between  border-bottom mb-3 p-3">
                                 <span class="fs-4 fw-bold">모집 게시판</span>
                                 <button type="button" class="btn btn-light" onclick="location.href='/team'">더보기</button>
