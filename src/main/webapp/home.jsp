@@ -55,7 +55,7 @@
                                 </div>
                                 <c:if test="${sessionScope.loginError == 'error'}">
                                     <div class="row flex-nowrap g-2 align-items-center">
-                                        <span>아이디 또는 비밀번호가 틀렸습니다.</span>
+                                        <span class="text-danger">아이디 또는 비밀번호가 틀렸습니다.</span>
                                     </div>
                                 </c:if>
                                 <div class="row flex-nowrap g-2 align-items-center justify-content-end my-2">
