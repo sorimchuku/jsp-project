@@ -45,7 +45,7 @@
   <div class="container px-5">
     <div class=" align-items-center justify-content-start">
       <div class="text-xl-start">
-        <h1 class="display-8 fw-bolder text-white mb-2">개인 기록</h1>
+        <h1 class="display-8 fw-bolder text-white mb-2">개인 기록 수정</h1>
       </div>
     </div>
   </div>
