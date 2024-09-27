@@ -886,12 +886,12 @@ public class BoardDAO {
                         break;
                     }
                     default: {
-                        sql = "select count(*) as count from team_board";
+                        sql = "select count(*) as count from free_board";
                         pstmt = conn.prepareStatement(sql);
                     }
                 }
             } else {
-                sql = "select count(*) as count from team_board";
+                sql = "select count(*) as count from free_board";
                 pstmt = conn.prepareStatement(sql);
             }
             rs = pstmt.executeQuery();
